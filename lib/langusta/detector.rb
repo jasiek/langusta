@@ -1,0 +1,2 @@
+class Langusta::Detector
+end
