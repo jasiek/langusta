@@ -6,4 +6,5 @@ module Langusta
   autoload :Language, 'langusta/language'
   autoload :LangProfile, 'langusta/lang_profile'
   autoload :Detector, 'langusta/detector'
+  autoload :NGram, 'langusta/n_gram'
 end
