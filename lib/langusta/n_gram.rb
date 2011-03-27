@@ -1,7 +1,21 @@
 module Langusta
   class NGram
     N_GRAM = 3
+    UCS2_SPACE = "\x00\x20"
 
+    def self.calculate_latin1_excluded
+      internal_hash = JavaPropertyReader.new("messages.properties").underlying_hash
+      _, value = internal_hash.find do |k, v|
+        k == "NGram.LATIN1_EXCLUDE"
+      end
+      
+      (0..(value.length - 2)).step(2).map do |index|
+        value[index, 2]
+      end
+    end
+
+    LATIN1_EXCLUDED = self.calculate_latin1_excluded()
+    
     # TODO
     def self.cjk_map
       @@cjk_map ||= calculate_cjk_map()
@@ -10,7 +24,9 @@ module Langusta
     def self.calculate_cjk_map
       internal_hash = JavaPropertyReader.new("messages.properties").underlying_hash
       m = {}
-      internal_hash.values.each do |chars|
+      internal_hash.select do |key, _|
+        /KANJI_[0-9]{1}/ =~ key
+      end.each do |_, chars|
         key = chars[0..1]
         m[key] = key
         (2..(chars.length - 2)).step(2) do |n|
@@ -24,11 +40,11 @@ module Langusta
       block = UnicodeBlock.of(ch)
       case block
       when UnicodeBlock::BASIC_LATIN
-        (ch < 'A' || (ch < 'a' && ch > 'Z') || ch > 'z') ? ' ' : ch
+        (ch < "\x00A" || (ch < "\x00a" && ch > "\x00Z") || ch > "\x00z") ? UCS2_SPACE : ch
       when UnicodeBlock::LATIN_1_SUPPLEMENT
-        LATIN1_EXCLUDED.include?(ch) ? ' ' : ch
+        LATIN1_EXCLUDED.include?(ch) ? UCS2_SPACE : ch
       when UnicodeBlock::GENERAL_PUNCTUATION
-        ' '
+        UCS2_SPACE
       when UnicodeBlock::ARABIC
         (ch == "\x06\xcc") ? "\x06\x4a" : ch
       when UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
@@ -44,14 +60,14 @@ module Langusta
       when UnicodeBlock::CJK_UNIFIED_IDEOGRAPHS
         cjk_map.has_key?(ch) ? cjk_map[ch] : ch
       when UnicodeBlock::HANGUL_SYLLABES
-        "\xac00"
+        "\xac\x00"
       else
         ch
       end
     end
 
     def initialize
-      @grams = [' ']
+      @grams = [UCS2_SPACE]
       @capitalword = false
     end
 
@@ -61,27 +77,26 @@ module Langusta
       return nil if n < 1 || n > 3 || len < n
       if n == 1
         ch = @grams[len - 1]
-        return (ch == ' ') ? nil : ch
+        return (ch == UCS2_SPACE) ? nil : ch
       else
         return @grams[len - n, len].join('')
       end
     end
 
     def add_char(character)
-      raise character.inspect unless character.scan(/./mu).length == 1
-      character = self.class.normalize(character)
+      character = NGram.normalize(character)
       lastchar = @grams[-1]
-      if lastchar == ' '
-        @grams = [' ']
+      if lastchar == UCS2_SPACE
+        @grams = [UCS2_SPACE]
         @capitalword = false
-        return if character == ' '
+        return if character == UCS2_SPACE
       elsif @grams.length > N_GRAM
         @grams = @grams[1..-1]
       end
       @grams << character
 
-      if character.upcase == character
-        if lastchar.upcase == lastchar
+      if UnicodeBlock.is_upper_case?(character)
+        if UnicodeBlock.is_upper_case?(lastchar)
           @capitalword = true
         end
       else
