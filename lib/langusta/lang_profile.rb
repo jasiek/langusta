@@ -1,13 +1,10 @@
 require 'set'
-require 'active_support/core_ext/string'
-
-TODO_NGRAM_LEN = 3
 
 class Langusta::LangProfile
   MINIMUM_FREQ = 2
   LESS_FREQ_RATIO = 100_000
 
-  attr_reader :name, :freq
+  attr_reader :name, :freq, :n_words
 
   def initialize(name=nil)
     @name = name
@@ -18,7 +15,7 @@ class Langusta::LangProfile
   def add(gram)
     return if @name.nil? or gram.nil?
     length = gram.mb_chars.size
-    return if length < 1 or length > TODO_NGRAM_LEN
+    return if length < 1 or length > NGram.N_GRAM
     @n_words[length - 1] += 1
     @freq[gram] ||= 0
     @freq[gram] += 1

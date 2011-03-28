@@ -1,6 +1,7 @@
 source :gemcutter
 gem "i18n", "0.5.0"
 gem "activesupport", "3.0.5"
+gem "oniguruma", "1.1.0"
 
 group :development do
   gem "bundler", "~> 1.0.0"
