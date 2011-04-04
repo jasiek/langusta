@@ -40,3 +40,4 @@ tmtags
 
 # For vim:
 *.swp
+vendor

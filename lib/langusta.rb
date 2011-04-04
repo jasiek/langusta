@@ -6,6 +6,7 @@ require 'oniguruma'
 module Langusta
   VERSION = '0.0.1'
 
+  autoload :RegexHelper, 'langusta/regex_helper'
   autoload :UCS2String, 'langusta/ucs2_string'
   autoload :Language, 'langusta/language'
   autoload :LangProfile, 'langusta/lang_profile'

@@ -1,4 +1,6 @@
 module Langusta
+  # The class NGram generates n-sized substrings (n-grams) of an input string. Input strings are
+  # constructed on a character by character basis.
   class NGram
     N_GRAM = 3
     UCS2_SPACE = "\x00\x20"
@@ -16,7 +18,6 @@ module Langusta
 
     LATIN1_EXCLUDED = self.calculate_latin1_excluded()
     
-    # TODO
     def self.cjk_map
       @@cjk_map ||= calculate_cjk_map()
     end
@@ -36,6 +37,9 @@ module Langusta
       m
     end
 
+    # Normalizes certain characters - numeric, japanese characters, arabic script and so on.
+    # @param ch (Codepoint in the range of 0x0000-0xFFFF).
+    # @return [Integer] representing the UnicodeBlock of a given character.
     def self.normalize(ch)
       block = UnicodeBlock.of(ch)
       case block

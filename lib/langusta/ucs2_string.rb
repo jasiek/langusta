@@ -15,6 +15,10 @@ module Langusta
     def gsub!(oregexp, subst)
       oregexp.gsub!(@underlying, subst)
     end
+    
+    def hash
+      @underlying.hash
+    end
 
     def <<(ucs2string)
       raise TypeError unless ucs2string.is_a?(UCS2String)
@@ -27,5 +31,14 @@ module Langusta
       end
     end
     alias :each :each_char
+
+    def eql?(other)
+      other.is_a?(UCS2String) && self.underlying.eql?(other.underlying)
+    end
+
+    def size
+      @underlying.size / 2
+    end
+    alias :length :size
   end
 end
