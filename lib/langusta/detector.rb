@@ -10,9 +10,6 @@ module Langusta
     BASE_FREQ = 10000
     UNKNOWN_LANG = "unknown"
 
-    URL_REGEX = Oniguruma::ORegexp.new("https?://[-_.?&~;+=/#0-9A-Za-z]+", :encoding => Oniguruma::ENCODING_UTF16_BE)
-    MAIL_REGEX = Oniguruma::ORegexp.new("[-_.0-9A-Za-z]+@[-_0-9A-Za-z]+[-_.0-9A-Za-z]+", :encoding => Oniguruma::ENCODING_UTF16_BE)
-    
     def initialize(factory)
       @word_lang_prob_map = factory.word_lang_prob_map
       @lang_list = factory.lang_list
@@ -26,12 +23,12 @@ module Langusta
     end
 
     def append(text)
-      text.gsub!(URL_REGEX, "\x00\x20")
-      text.gsub!(MAIL_REGEX, "\x00\x20")
+      text.gsub!(RegexHelper::URL_REGEX, "\x00\x20")
+      text.gsub!(RegexHelper::MAIL_REGEX, "\x00\x20")
       text.each_char do |c|
         NGram.normalize(c)
       end
-      @text = text.gsub!(Oniguruma::ORegexp.new("(\x00\x20)*", :encoding => Oniguruma::ENCODING_UTF16_BE), "\x00\x20")
+      @text = text.gsub!(RegexHelper::SPACE_REGEX, "\x00\x20")
     end
 
     def detect
