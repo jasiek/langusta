@@ -32,12 +32,13 @@ module Langusta
     def <<(ucs2string)
       case ucs2string
       when UCS2String
-        return UCS2String.new(@underlying + ucs2string.underlying)
+        @underlying += ucs2string.underlying
       when String
-        return UCS2String.new(@underlying + ucs2string)
+        @underlying += ucs2string
       else
         raise TypeError
       end
+      self
     end
 
     def each_char(&blk)
