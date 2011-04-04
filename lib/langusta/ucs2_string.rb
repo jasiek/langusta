@@ -51,6 +51,10 @@ module Langusta
     def eql?(other)
       other.is_a?(UCS2String) && self.underlying.eql?(other.underlying)
     end
+    
+    def ==(other)
+      self.underlying == other.underlying
+    end
 
     def size
       @underlying.size / 2

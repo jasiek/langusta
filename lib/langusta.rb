@@ -16,4 +16,5 @@ module Langusta
   autoload :NGram, 'langusta/n_gram'
   autoload :DetectorFactory, 'langusta/detector_factory'
   autoload :Detector, 'langusta/detector'
+  autoload :TagExtractor, 'langusta/tag_extractor'
 end
