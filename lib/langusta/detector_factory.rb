@@ -14,7 +14,7 @@ module Langusta
       @lang_list << profile.name
       profile.freq.keys.each do |word|
         if not @word_lang_prob_map.has_key?(word)
-          @word_lang_prob_map[word] = Array.new(langsize)
+          @word_lang_prob_map[word] = Array.new(langsize, 0.0)
         end
         prob = 1.0 * profile.freq[word] / profile.n_words[word.length - 1]
         @word_lang_prob_map[word][index] = prob

@@ -14,6 +14,15 @@ module Langusta
 
     def gsub!(oregexp, subst)
       oregexp.gsub!(@underlying, subst)
+      self
+    end
+
+    def map(&blk)
+      mapped = []
+      each_char do |char|
+        mapped << blk.call(char)
+      end
+      return UCS2String.new(mapped.join)
     end
     
     def hash
@@ -21,8 +30,14 @@ module Langusta
     end
 
     def <<(ucs2string)
-      raise TypeError unless ucs2string.is_a?(UCS2String)
-      self.new(@underlying + ucs2string.underlying)
+      case ucs2string
+      when UCS2String
+        return UCS2String.new(@underlying + ucs2string.underlying)
+      when String
+        return UCS2String.new(@underlying + ucs2string)
+      else
+        raise TypeError
+      end
     end
 
     def each_char(&blk)

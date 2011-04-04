@@ -40,7 +40,13 @@ class DetectorTest < Test::Unit::TestCase
 
   def test_detector3
     detector = @factory.create()
-    detector.append(UCS2String.new("\x30\x42\x30\x42\x30\x42\x40\x42\x00a"))
+    detector.append(UCS2String.new("\x00d\x00 \x00e"))
+    assert_equal("en", detector.detect())
+  end
+  
+  def test_detector4
+    detector = @factory.create()
+    detector.append(UCS2String.new("\x30\x42\x30\x42\x30\x42\x30\x42\x00a"))
     assert_equal("jp", detector.detect())
   end
 end

@@ -25,7 +25,7 @@ module Langusta
     def append(text)
       text.gsub!(RegexHelper::URL_REGEX, "\x00\x20")
       text.gsub!(RegexHelper::MAIL_REGEX, "\x00\x20")
-      text.each_char do |c|
+      text = text.map do |c|
         NGram.normalize(c)
       end
       @text = text.gsub!(RegexHelper::SPACE_REGEX, "\x00\x20")
@@ -40,23 +40,23 @@ module Langusta
       cleaning_text()
       ngrams = extract_ngrams()
       raise "no features in text" if ngrams.empty?
-      langprob = Array.new(@lang_list.length)
+      @langprob = Array.new(@lang_list.length, 0.0)
 
-      n_trial.times do
+      @n_trial.times do
         prob = init_probability()
-        alpha = @alpha + next_gaussian() * ALPHA_WIDTH
+        alpha = @alpha + Detector.next_gaussian() * ALPHA_WIDTH
         
         i = 0
         Kernel.loop do
           r = Kernel.rand(ngrams.length)
-          update_lang_prob(prob, ngrams.get(r), alpha)
+          update_lang_prob(prob, ngrams[r], alpha)
           if i % 5
-            break if normalize_prob(prob) > CONV_THRESHOLD || i >= ITERATION_LIMIT
+            break if Detector.normalize_prob(prob) > CONV_THRESHOLD || i >= ITERATION_LIMIT
             # verbose
           end
         end
-        langprob.length.times do |j|
-          langprob[j] += prob[j] / n_trial
+        @langprob.length.times do |j|
+          @langprob[j] += prob[j] / @n_trial
         end
         # verbose
       end
@@ -99,16 +99,16 @@ module Langusta
       @text.each_char do |c|
         if c < "\00z" && c >= "\x00A"
           latin_count += 1
-        elsif c > "\x03\x00" && UnicodeBlock.of(c) != UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
+        elsif c >= "\x03\x00" && UnicodeBlock.of(c) != UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
           non_latin_count += 1
         end
       end
       if latin_count * 2 < non_latin_count
-        text_without_latin = StringIO.new
+        text_without_latin = UCS2String.new('')
         @text.each_char do |c|
           text_without_latin << c if c > "\x00z" || c < "\x00A"
         end
-        @text = text_without_latin.to_s
+        @text = text_without_latin
       end
     end
 
@@ -116,8 +116,8 @@ module Langusta
       list = []
       ngram = NGram.new
       @text.each_char do |char|
-        ngram.add(char)
-        (1..NGram.N_GRAM).each do |n|
+        ngram.add_char(char)
+        (1..NGram::N_GRAM).each do |n|
           w = ngram.get(n)
           list << w if w && @word_lang_prob_map.has_key?(w)
         end
@@ -130,7 +130,6 @@ module Langusta
         detect_block()
       end
       sort_probability(@langprob)
-      @langprob
     end
 
     def init_probability
@@ -146,15 +145,14 @@ module Langusta
     end
 
     def sort_probability(prob)
-      list = prob.zip(@lang_list)
-      list.sort_by! do |x|
-        x[0]
+      list = []
+      prob.each_with_index do |prob, index|
+        list[index] = Language.new(@lang_list[index], prob)
       end
-      list.select! do |x|
-        x[0] > PROB_THRESHOLD
-      end
-      list.map do |x|
-        x[1]
+      list.sort_by do |x|
+        x.prob
+      end.select do |x|
+        x.prob > PROB_THRESHOLD
       end
     end
 
@@ -176,6 +174,18 @@ module Langusta
       end.map do |p, lang|
         "%s:%.5f" % [p, lang]
       end.join(' ')
+    end
+
+    # Box-Muller transform.
+    def self.next_gaussian
+      s = 0
+      while s >= 1 || s == 0
+        v1 = 2 * Kernel.rand - 1
+        v2 = 2 * Kernel.rand - 1
+        s = v1 * v1 + v2 * v2
+      end
+      multiplier = Math.sqrt(-2 * Math.log(s)/s)
+      return v1 * multiplier
     end
   end
 end
