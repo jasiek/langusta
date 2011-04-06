@@ -75,18 +75,23 @@ module Langusta
       @capitalword = false
     end
 
+    # Retrieves an n-sized NGram from the current sequence.
+    # @param n [Integer] length of NGram.
+    # @return [UCS2String] n-sized NGram.
     def get(n)
       return nil if @capitalword
       len = @grams.length
       return nil if n < 1 || n > 3 || len < n
       if n == 1
         ch = @grams[len - 1]
-        return (ch == UCS2_SPACE) ? nil : ch
+        return (ch == UCS2_SPACE) ? nil : UCS2String.new(ch)
       else
-        return @grams[len - n, len].join('')
+        return UCS2String.new(@grams[len - n, len].join)
       end
     end
 
+    # Adds a single character to an NGram sequence.
+    # @param character [String[2]] Two-byte Unicode codepoint.
     def add_char(character)
       character = NGram.normalize(character)
       lastchar = @grams[-1]
