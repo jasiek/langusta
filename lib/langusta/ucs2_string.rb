@@ -4,6 +4,10 @@ module Langusta
 
     attr_reader :underlying
 
+    def self.from_utf8(utf8_string)
+      self.new(Iconv.conv('ucs-2', 'utf-8', utf8_string))
+    end
+
     def initialize(underlying)
       @underlying = Iconv.conv("ucs-2", "ucs-2", underlying)
     end

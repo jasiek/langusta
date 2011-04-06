@@ -31,7 +31,7 @@ module Langusta
             profile.add(gram.get(n))
           end
         end
-        count += 1
+        @count += 1
       end
       clear()
     end
