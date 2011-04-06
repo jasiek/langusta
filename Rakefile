@@ -14,15 +14,11 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "langusta"
   gem.homepage = "http://github.com/jasiek/langusta"
-  gem.license = "MIT"
+  gem.license = "Apache 2.0"
   gem.summary = %Q{Language detection library based on http://code.google.com/p/language-detection/.}
   gem.description = %Q{Uses naive bayesian filter.}
   gem.email = "jan.szumiec@gmail.com"
   gem.authors = ["Jan Szumiec"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
