@@ -14,27 +14,27 @@ class LangProfileTest < Test::Unit::TestCase
 
   def test_add
     profile = LangProfile.new('en')
-    profile.add(UCS2String.new("\x00a"))
-    assert_equal(1, profile.freq[UCS2String.new("\x00a")])
-    profile.add(UCS2String.new("\x00a"))
-    assert_equal(2, profile.freq[UCS2String.new("\x00a")])
+    profile.add(UCS2String.from_utf8("a"))
+    assert_equal(1, profile.freq[UCS2String.from_utf8("a")])
+    profile.add(UCS2String.from_utf8("a"))
+    assert_equal(2, profile.freq[UCS2String.from_utf8("a")])
     profile.omit_less_freq()
   end
 
   def test_add_illegally_1
     profile = LangProfile.new
-    profile.add(UCS2String.new("\x00a"))
-    assert_nil(profile.freq[UCS2String.new("\x00a")])
+    profile.add(UCS2String.from_utf8("a"))
+    assert_nil(profile.freq[UCS2String.from_utf8("a")])
   end
 
   def test_add_illegally_2
     profile = LangProfile.new('en')
-    profile.add(UCS2String.new("\x00a"))
-    profile.add(UCS2String.new(""))
-    profile.add(UCS2String.new("\x00a\x00b\x00c\x00d"))
-    assert_equal(1, profile.freq[UCS2String.new("\x00a")])
-    assert_nil(profile.freq[UCS2String.new("")])
-    assert_nil(profile.freq[UCS2String.new("\x00a\x00b\x00c\x00d")])
+    profile.add(UCS2String.from_utf8("a"))
+    profile.add(UCS2String.from_utf8(""))
+    profile.add(UCS2String.from_utf8("abcd"))
+    assert_equal(1, profile.freq[UCS2String.from_utf8("a")])
+    assert_nil(profile.freq[UCS2String.from_utf8("")])
+    assert_nil(profile.freq[UCS2String.from_utf8("abcd")])
   end
 
   def test_omit_less_freq
@@ -47,12 +47,12 @@ class LangProfileTest < Test::Unit::TestCase
     end
     profile.add(UCS2String.new("\x30\x50"))
 
-    assert_equal(5, profile.freq[UCS2String.new("\x00a")])
+    assert_equal(5, profile.freq[UCS2String.from_utf8("a")])
     assert_equal(5, profile.freq[UCS2String.new("\x30\x42")])
     assert_equal(1, profile.freq[UCS2String.new("\x30\x50")])
 
     profile.omit_less_freq()
-    assert_nil(profile.freq[UCS2String.new("\x00a")])
+    assert_nil(profile.freq[UCS2String.from_utf8("a")])
     assert_equal(5, profile.freq[UCS2String.new("\x30\x42")])
     assert_nil(profile.freq[UCS2String.new("\x30\x50")])
   end

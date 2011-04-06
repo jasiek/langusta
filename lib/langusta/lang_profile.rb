@@ -12,7 +12,10 @@ module Langusta
       @n_words = Array.new(NGram::N_GRAM, 0)
     end
 
+    # Adds a given NGram to this language profile. This operation is expected to be invoked multiple times for the same arguments.
+    # @param gram [UCS2String]
     def add(gram)
+      raise TypeError.new("UCS2String expected, got: #{gram.class}") unless gram.is_a?(UCS2String)
       return if @name.nil? or gram.nil?
       length = gram.size
       return if length < 1 or length > NGram::N_GRAM
