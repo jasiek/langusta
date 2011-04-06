@@ -36,6 +36,7 @@ Usage:
   langusta --batchtest -d [profile directory] -a [alpha] [test file(s)]
 EOF
       end
+      0
     end
 
     def initialize

@@ -1,5 +1,9 @@
 $: << File.expand_path(File.dirname(__FILE__))
 
+require 'rubygems'
+require 'bundler'
+Bundler.setup
+
 require 'optparse'
 require 'iconv'
 
