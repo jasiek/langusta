@@ -13,6 +13,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'langusta'
 require 'ruby-debug'
+require 'mocha'
 
 class Test::Unit::TestCase
   include Langusta

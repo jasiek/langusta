@@ -6,10 +6,30 @@ module Langusta
     LESS_FREQ_RATIO = 100_000
     attr_reader :name, :freq, :n_words
 
+    def self.load_from_file(filename)
+      json = Yajl::Parser.parse(File.new(filename))
+      profile = self.new
+
+      name = json['name']
+      n_words = json['n_words']
+      freq = {}
+      json['freq'].inject({}) do |acc, kv|
+        key, value = kv
+        acc[UCS2String.from_utf8(key)] = value
+        acc
+      end
+      profile.populate_json(name, freq, n_words)
+      profile
+    end
+
     def initialize(name=nil)
       @name = name
       @freq = {}
       @n_words = Array.new(NGram::N_GRAM, 0)
+    end
+
+    def populate_json(name, freq, n_words)
+      @name, @freq, @n_words = name, freq, n_words
     end
 
     # Adds a given NGram to this language profile. This operation is expected to be invoked multiple times for the same arguments.

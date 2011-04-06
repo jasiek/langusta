@@ -1,7 +1,11 @@
 $: << File.expand_path(File.dirname(__FILE__))
 
+require 'optparse'
 require 'iconv'
+
+# Required gems
 require 'oniguruma'
+require 'yajl'
 
 module Langusta
   VERSION = '0.0.1'
@@ -17,4 +21,6 @@ module Langusta
   autoload :DetectorFactory, 'langusta/detector_factory'
   autoload :Detector, 'langusta/detector'
   autoload :TagExtractor, 'langusta/tag_extractor'
+  autoload :Command, 'langusta/command'
 end
+
