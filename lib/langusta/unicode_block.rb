@@ -2,6 +2,7 @@ module Langusta
   module UnicodeBlock
     # Half-baked implementation of Java's UnicodeBlock.
 
+    OTHER = 0
     BASIC_LATIN = 1
     LATIN_1_SUPPLEMENT = 2
     GENERAL_PUNCTUATION = 3
@@ -26,7 +27,7 @@ module Langusta
       return BOPOMOFO_EXTENDED if ("\x31\a0".."\x31\xbf").include?(character)
       return CJK_UNIFIED_IDEOGRAPHS if ("\x4e\x00".."\x9f\xff").include?(character)
       return HANGUL_SYLLABES if ("\xac\x00".."\xd7\xaf").include?(character)
-      raise "Uknown block: #{character.inspect}"
+      return OTHER
     end
 
     def self.is_upper_case?(character)

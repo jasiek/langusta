@@ -12,8 +12,7 @@ module Langusta
 
       name = json['name']
       n_words = json['n_words']
-      freq = {}
-      json['freq'].inject({}) do |acc, kv|
+      freq = json['freq'].inject({}) do |acc, kv|
         key, value = kv
         acc[UCS2String.from_utf8(key)] = value
         acc

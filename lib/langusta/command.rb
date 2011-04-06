@@ -38,8 +38,23 @@ EOF
       end
     end
 
+    def initialize
+      @detector_factory = DetectorFactory.new
+    end
+
     def detect_lang(profile_directory, test_files, alpha=nil)
-      @profiles = load_profiles(profile_directory)
+      profiles = load_profiles(profile_directory)
+      profiles.each_with_index do |profile, index|
+        @detector_factory.add_profile(profile, index, profiles.length)
+      end
+      test_files.each do |filename|
+        ucs2_content = UCS2String.from_utf8(File.open(filename, 'r').read)
+        detector = @detector_factory.create(alpha)
+        detector.append(ucs2_content)
+        
+        language = detector.detect()
+        puts language.inspect
+      end
     end
 
     def batch_test(profile_directory, test_files, alpha=nil)
