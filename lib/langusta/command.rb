@@ -43,24 +43,31 @@ EOF
     end
 
     def detect_lang(profile_directory, test_files, alpha=nil)
-      profiles = load_profiles(profile_directory)
-      profiles.each_with_index do |profile, index|
-        @detector_factory.add_profile(profile, index, profiles.length)
-      end
+      initialize_factory(profile_directory)
       test_files.each do |filename|
-        ucs2_content = UCS2String.from_utf8(File.open(filename, 'r').read)
-        detector = @detector_factory.create(alpha)
-        detector.append(ucs2_content)
-        
-        language = detector.detect()
-        puts language.inspect
+        language = detect_single_lang(filename, alpha)
+        puts "%s: %s" % [filename, language]
       end
     end
 
     def batch_test(profile_directory, test_files, alpha=nil)
     end
 
-    private
+    def detect_single_lang(filename, alpha)
+      ucs2_content = UCS2String.from_utf8(File.open(filename, 'r').read)
+      detector = @detector_factory.create(alpha)
+      detector.append(ucs2_content)
+      
+      language = detector.detect()
+    end
+
+    def initialize_factory(profile_directory)
+      profiles = load_profiles(profile_directory)
+      profiles.each_with_index do |profile, index|
+        @detector_factory.add_profile(profile, index, profiles.length)
+      end
+    end
+
     def load_profiles(directory)
       @profiles = Dir[File.join(directory, '/*')].map do |filename|
         LangProfile.load_from_file(filename)
