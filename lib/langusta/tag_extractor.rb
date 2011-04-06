@@ -27,7 +27,7 @@ module Langusta
         gram = NGram.new
         @buffer.each_char do |char|
           gram.add_char(char)
-          NGram::N_GRAM.times do |n|
+          (1..NGram::N_GRAM).each do |n|
             profile.add(gram.get(n))
           end
         end
