@@ -21,8 +21,11 @@ module Langusta
       @prior_map = nil
       @verbose = false
     end
-
+    
+    # Append more text to be recognized.
+    # @param text [UCS2String]
     def append(text)
+      raise TypeError.new("Expected: UCS2String, got: #{text.class}") unless text.is_a?(UCS2String)
       text.gsub!(RegexHelper::URL_REGEX, "\x00\x20")
       text.gsub!(RegexHelper::MAIL_REGEX, "\x00\x20")
       text = text.map do |c|
