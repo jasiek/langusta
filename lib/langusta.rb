@@ -26,5 +26,6 @@ module Langusta
   autoload :Detector, 'langusta/detector'
   autoload :TagExtractor, 'langusta/tag_extractor'
   autoload :Command, 'langusta/command'
+  autoload :LanguageDetectionFacade, 'langusta/language_detection_facade'
 end
 

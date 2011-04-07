@@ -23,7 +23,7 @@ class CommandTest < Test::Unit::TestCase
 
   def test_detect_lang
     cmd = Command.new
-    cmd.detect_lang('profiles', ['test/test_data/polski.txt'])
+    cmd.detect_lang('profiles', ['test/test_data/pl'])
   end
 
   def test_detect_single_lang
