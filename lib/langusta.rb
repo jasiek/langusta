@@ -12,7 +12,7 @@ require 'oniguruma'
 require 'yajl'
 
 module Langusta
-  VERSION = '0.0.1'
+  VERSION = '0.1.0'
 
   autoload :RegexHelper, 'langusta/regex_helper'
   autoload :UCS2String, 'langusta/ucs2_string'
@@ -28,6 +28,9 @@ module Langusta
   autoload :Command, 'langusta/command'
   autoload :LanguageDetectionFacade, 'langusta/language_detection_facade'
 
-  DEFAULT_PROFILE_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', 'profiles'))
+  ABSOLUTE_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  PROFILES_PATH = File.join(ABSOLUTE_PATH, 'profiles')
+  UPPERCASE_BIN = File.join(ABSOLUTE_PATH, 'data/uppercase.bin')
+  MESSAGES_PROPERTIES = File.join(ABSOLUTE_PATH, 'data/messages.properties')
 end
 

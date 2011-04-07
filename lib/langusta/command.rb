@@ -55,7 +55,7 @@ EOF
     end
 
     def detect_single_lang(filename, alpha)
-      ucs2_content = UCS2String.from_utf8(File.open(filename, 'r').read)
+      ucs2_content = UCS2String.from_utf8(File.open(filename).read)
       detector = @detector_factory.create(alpha)
       detector.append(ucs2_content)
       

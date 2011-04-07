@@ -3,7 +3,7 @@ require 'test/helper'
 class LangustaTest < Test::Unit::TestCase
 
   FACTORY = DetectorFactory.new
-  profiles = Dir[File.join(DEFAULT_PROFILE_PATH, '*')].map do |filename|
+  profiles = Dir[File.join(PROFILES_PATH, '*')].map do |filename|
     LangProfile.load_from_file(filename)
   end
   profiles.each_with_index do |profile, index|
@@ -15,7 +15,7 @@ class LangustaTest < Test::Unit::TestCase
     define_method(("test_%s_language" % [language]).to_sym) do 
       detector = FACTORY.create
       
-      ucs2_content = UCS2String.from_utf8(File.open(filename, 'r').read)
+      ucs2_content = UCS2String.from_utf8(File.open(filename).read)
       detector = FACTORY.create
       detector.append(ucs2_content)
       
