@@ -63,9 +63,9 @@ class LangProfileTest < Test::Unit::TestCase
   end
 
   def test_load_from_file
-    Dir['profiles/*'].each do |filename|
+    Dir[File.join(DEFAULT_PROFILE_PATH, '*')].each do |filename|
       profile = LangProfile.load_from_file(filename)
-      assert_equal(filename.split(/\//)[1], profile.name)
+      assert_equal(filename.split(/\//).last, profile.name)
       has_content = [
        profile.freq[UCS2String.from_utf8(" A")], # Latin
        profile.freq[UCS2String.new("\x06\x0c")], # Arabic

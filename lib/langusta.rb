@@ -27,5 +27,7 @@ module Langusta
   autoload :TagExtractor, 'langusta/tag_extractor'
   autoload :Command, 'langusta/command'
   autoload :LanguageDetectionFacade, 'langusta/language_detection_facade'
+
+  DEFAULT_PROFILE_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', 'profiles'))
 end
 

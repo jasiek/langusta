@@ -16,7 +16,7 @@ module Langusta
 
     private
     def load_profiles
-      Dir['profiles/*'].map do |filename|
+      Dir[File.join(DEFAULT_PROFILE_PATH, '/*')].map do |filename|
         LangProfile.load_from_file(filename)
       end
     end
