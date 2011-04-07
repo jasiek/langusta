@@ -35,7 +35,7 @@ module Langusta
     end
 
     def self.compute_upper_case_table
-      File.open("uppercase.bin").read
+      File.open(UPPERCASE_BIN).read
     end
   end
 end

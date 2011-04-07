@@ -28,6 +28,9 @@ module Langusta
   autoload :Command, 'langusta/command'
   autoload :LanguageDetectionFacade, 'langusta/language_detection_facade'
 
-  DEFAULT_PROFILE_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..', 'profiles'))
+  ABSOLUTE_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  PROFILES_PATH = File.join(ABSOLUTE_PATH, 'profiles')
+  UPPERCASE_BIN = File.join(ABSOLUTE_PATH, 'data/uppercase.bin')
+  MESSAGES_PROPERTIES = File.join(ABSOLUTE_PATH, 'data/messages.properties')
 end
 

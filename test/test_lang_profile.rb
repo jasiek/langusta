@@ -63,7 +63,7 @@ class LangProfileTest < Test::Unit::TestCase
   end
 
   def test_load_from_file
-    Dir[File.join(DEFAULT_PROFILE_PATH, '*')].each do |filename|
+    Dir[File.join(PROFILES_PATH, '*')].each do |filename|
       profile = LangProfile.load_from_file(filename)
       assert_equal(filename.split(/\//).last, profile.name)
       has_content = [

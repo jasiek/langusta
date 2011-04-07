@@ -6,7 +6,7 @@ module Langusta
     UCS2_SPACE = "\x00\x20"
 
     def self.calculate_latin1_excluded
-      internal_hash = JavaPropertyReader.new("messages.properties").underlying_hash
+      internal_hash = JavaPropertyReader.new(MESSAGES_PROPERTIES).underlying_hash
       _, value = internal_hash.find do |k, v|
         k == "NGram.LATIN1_EXCLUDE"
       end
@@ -23,7 +23,7 @@ module Langusta
     end
 
     def self.calculate_cjk_map
-      internal_hash = JavaPropertyReader.new("messages.properties").underlying_hash
+      internal_hash = JavaPropertyReader.new(MESSAGES_PROPERTIES).underlying_hash
       m = {}
       internal_hash.select do |key, _|
         /KANJI_[0-9]{1}/ =~ key
