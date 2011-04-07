@@ -29,6 +29,6 @@ class CommandTest < Test::Unit::TestCase
   def test_detect_single_lang
     cmd = Command.new
     cmd.initialize_factory('profiles')
-    assert_equal("pl", cmd.detect_single_lang('test/test_data/polski.txt', 0.5))
+    assert_equal("pl", cmd.detect_single_lang('test/test_data/pl', 0.5))
   end
 end
