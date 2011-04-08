@@ -28,18 +28,21 @@ module Langusta
     HANGUL_SYLLABES_RANGE = "\xac\x00".."\xd7\xaf"
 
     def self.of(character)
-      return BASIC_LATIN if BASIC_LATIN_RANGE.include?(character)
-      return LATIN_1_SUPPLEMENT if LATIN_1_SUPPLEMENT_RANGE.include?(character)
-      return GENERAL_PUNCTUATION if GENERAL_PUNCTUATION_RANGE.include?(character)
-      return ARABIC if ARABIC_RANGE.include?(character)
-      return LATIN_EXTENDED_ADDITIONAL if LATIN_EXTENDED_ADDITIONAL_RANGE.include?(character)
-      return HIRAGANA if HIRAGANA_RANGE.include?(character)
-      return KATAKANA if KATAKANA_RANGE.include?(character)
-      return BOPOMOFO if BOPOMOFO_RANGE.include?(character)
-      return BOPOMOFO_EXTENDED if BOPOMOFO_EXTENDED_RANGE.include?(character)
-      return CJK_UNIFIED_IDEOGRAPHS if CJK_UNIFIED_IDEOGRAPHS_RANGE.include?(character)
-      return HANGUL_SYLLABES if HANGUL_SYLLABES_RANGE.include?(character)
-      return OTHER
+      case character
+      when BASIC_LATIN_RANGE then return BASIC_LATIN
+      when LATIN_1_SUPPLEMENT_RANGE then return LATIN_1_SUPPLEMENT
+      when GENERAL_PUNCTUATION_RANGE then return GENERAL_PUNCTUATION
+      when ARABIC_RANGE then return ARABIC
+      when LATIN_EXTENDED_ADDITIONAL_RANGE then return LATIN_EXTENDED_ADDITIONAL
+      when HIRAGANA_RANGE then return HIRAGANA
+      when KATAKANA_RANGE then return KATAKANA
+      when BOPOMOFO_RANGE then return BOPOMOFO
+      when BOPOMOFO_EXTENDED_RANGE then return BOPOMOFO_EXTENDED
+      when CJK_UNIFIED_IDEOGRAPHS_RANGE then return CJK_UNIFIED_IDEOGRAPHS
+      when HANGUL_SYLLABES_RANGE then return HANGUL_SYLLABES
+      else
+        return OTHER
+      end
     end
 
     def self.is_upper_case?(character)
