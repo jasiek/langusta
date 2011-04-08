@@ -1,5 +1,4 @@
 source :gemcutter
-gem "i18n", "0.5.0"
 gem "oniguruma", "1.1.0"
 gem "yajl-ruby", "0.8.2"
 

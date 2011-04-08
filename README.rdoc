@@ -1,6 +1,17 @@
 = langusta
 
-Description goes here.
+Langusta is a language detection library based on a method designed and implemented by Nakatani Shuyo. This work is almost a direct 1-to-1 port of the original Java library which can be found at: http://code.google.com/p/language-detection/ . For more information about the method (naive bayesian classification), have a look at this presentation: http://www.slideshare.net/shuyo/language-detection-library-for-java . This implementation uses some resources from the original library, specifically the language profiles.
+
+== Runtime dependencies
+
+* oniguruma - regular expressions swiss army knife
+* yajl-ruby - a quick and elegant JSON parser
+
+== Compatibility
+
+* Ruby 1.8.7
+
+A version for Ruby 1.9 is in the works.
 
 == Contributing to langusta
  
@@ -14,6 +25,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2011 Jan Szumiec. See LICENSE.txt for
-further details.
-
+Copyright (c) 2011 Jan Szumiec. See LICENSE.txt for further details.
