@@ -1,15 +1,17 @@
 module Langusta
   class UCS2String
     include Enumerable
+    UTF8_TO_UCS2BE_ICONV = Iconv.new('ucs-2be', 'utf-8')
+    UCS2BE_TO_UCS2BE_ICONV = Iconv.new('ucs-2be', 'ucs-2be')
 
     attr_reader :underlying
 
     def self.from_utf8(utf8_string)
-      self.new(Iconv.conv('ucs-2be', 'utf-8', utf8_string))
+      self.new(UTF8_TO_UCS2BE_ICONV.iconv(utf8_string))
     end
 
     def initialize(underlying)
-      @underlying = Iconv.conv("ucs-2be", "ucs-2be", underlying)
+      @underlying = UCS2BE_TO_UCS2BE_ICONV.iconv(underlying)
     end
 
     def [](index)
