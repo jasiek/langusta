@@ -1,6 +1,8 @@
 = langusta
 
-Langusta is a language detection library based on a method designed and implemented by Nakatani Shuyo. This work is almost a direct 1-to-1 port of the original Java library which can be found at: http://code.google.com/p/language-detection/ . For more information about the method (naive bayesian classification), have a look at this presentation: http://www.slideshare.net/shuyo/language-detection-library-for-java . This implementation uses some resources from the original library, specifically the language profiles.
+Langusta is a language detection library based on a method designed and implemented by Nakatani Shuyo. This work is almost a direct 1-to-1 port of the original Java library which can be found at: http://code.google.com/p/language-detection.
+
+For more information about the method (naive bayesian classification), have a look at this presentation: http://www.slideshare.net/shuyo/language-detection-library-for-java. This implementation uses some resources from the original library, specifically the language profiles.
 
 == Runtime dependencies
 
