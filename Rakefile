@@ -16,7 +16,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/jasiek/langusta"
   gem.license = "Apache 2.0"
   gem.summary = %Q{Language detection library based on http://code.google.com/p/language-detection/.}
-  gem.description = %Q{Uses naive bayesian filter.}
+  gem.description = %Q{Highly accurate language detection library, uses naive bayesian filter.}
   gem.email = "jan.szumiec@gmail.com"
   gem.authors = ["Jan Szumiec"]
 end
