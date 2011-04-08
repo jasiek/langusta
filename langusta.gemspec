@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{langusta}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Szumiec"]
-  s.date = %q{2011-04-07}
+  s.date = %q{2011-04-08}
   s.default_executable = %q{langusta}
   s.description = %q{Uses naive bayesian filter.}
   s.email = %q{jan.szumiec@gmail.com}
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "bin/langusta",
     "data/messages.properties",
     "data/uppercase.bin",
+    "langusta.gemspec",
     "lib/langusta.rb",
     "lib/langusta/command.rb",
     "lib/langusta/detector.rb",
@@ -92,6 +93,7 @@ Gem::Specification.new do |s|
     "profiles/zh-cn",
     "profiles/zh-tw",
     "test/helper.rb",
+    "test/quality/test_falsified.rb",
     "test/test_command.rb",
     "test/test_data/af",
     "test/test_data/ar",
@@ -150,15 +152,17 @@ Gem::Specification.new do |s|
     "test/test_langusta.rb",
     "test/test_n_gram.rb",
     "test/test_tag_extractor.rb",
+    "test/test_ucs2_string.rb",
     "test/test_unicode_block.rb"
   ]
   s.homepage = %q{http://github.com/jasiek/langusta}
   s.licenses = ["Apache 2.0"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.rubygems_version = %q{1.5.1}
   s.summary = %q{Language detection library based on http://code.google.com/p/language-detection/.}
   s.test_files = [
     "test/helper.rb",
+    "test/quality/test_falsified.rb",
     "test/test_command.rb",
     "test/test_detector.rb",
     "test/test_detector_factory.rb",
@@ -169,6 +173,7 @@ Gem::Specification.new do |s|
     "test/test_langusta.rb",
     "test/test_n_gram.rb",
     "test/test_tag_extractor.rb",
+    "test/test_ucs2_string.rb",
     "test/test_unicode_block.rb"
   ]
 
@@ -176,7 +181,6 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<i18n>, ["= 0.5.0"])
       s.add_runtime_dependency(%q<oniguruma>, ["= 1.1.0"])
       s.add_runtime_dependency(%q<yajl-ruby>, ["= 0.8.2"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -185,7 +189,6 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
     else
-      s.add_dependency(%q<i18n>, ["= 0.5.0"])
       s.add_dependency(%q<oniguruma>, ["= 1.1.0"])
       s.add_dependency(%q<yajl-ruby>, ["= 0.8.2"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -195,7 +198,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruby-debug>, [">= 0"])
     end
   else
-    s.add_dependency(%q<i18n>, ["= 0.5.0"])
     s.add_dependency(%q<oniguruma>, ["= 1.1.0"])
     s.add_dependency(%q<yajl-ruby>, ["= 0.8.2"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
