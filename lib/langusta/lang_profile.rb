@@ -6,6 +6,9 @@ module Langusta
     LESS_FREQ_RATIO = 100_000
     attr_reader :name, :freq, :n_words
 
+    # Constructs a language profile from a file. Converts all NGrams from UTF-8 to Unicode codepoints.
+    # @param [String] file name of the language profile.
+    # @return [LangProfile]
     def self.load_from_file(filename)
       json = Yajl::Parser.parse(File.new(filename))
       profile = self.new

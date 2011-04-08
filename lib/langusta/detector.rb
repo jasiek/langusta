@@ -23,7 +23,7 @@ module Langusta
     end
     
     # Append more text to be recognized.
-    # @param text [UCS2String]
+    # @param text [UCS2String] text to be recognized
     def append(text)
       raise TypeError.new("Expected: UCS2String, got: #{text.class}") unless text.is_a?(UCS2String)
       text.gsub!(RegexHelper::URL_REGEX, "\x00\x20")
@@ -34,11 +34,14 @@ module Langusta
       @text = text.gsub!(RegexHelper::SPACE_REGEX, "\x00\x20")
     end
 
+    # Detect the language.
+    # @return [String] (usually) two-letter code describing the language.
     def detect
       probabilities = get_probabilities()
       (probabilities.length > 0) ? probabilities.first.lang : UNKNOWN_LANG
     end
 
+    private
     def detect_block
       cleaning_text()
       ngrams = extract_ngrams()

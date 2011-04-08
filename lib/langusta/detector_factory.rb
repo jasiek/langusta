@@ -9,6 +9,10 @@ module Langusta
       @lang_list = []
     end
 
+    # Adds a new language profile to this factory.
+    # @param [LangProfile] language profile to be added.
+    # @param [Fixnum] index at which the language profile is to be added.
+    # @param [Fixnum] counts how many language profiles are to be added to this factory in total.
     def add_profile(profile, index, langsize)
       raise LangDetectException.new("duplicate the same language profile") if @lang_list.include?(profile.name)
       @lang_list << profile.name
@@ -21,6 +25,8 @@ module Langusta
       end
     end
 
+    # Creates a new detector object, based on a preconfigured set of language profiles.
+    # @return [Detector]
     def create(alpha=nil)
       if alpha
         detector = create_detector()
@@ -31,6 +37,7 @@ module Langusta
       end
     end
 
+    private
     def create_detector
       raise LangDetectException.new("need to load profiles") if @lang_list.length == 0
       detector = Detector.new(self)
