@@ -9,6 +9,10 @@ For more information about the method (naive bayesian classification), have a lo
 * oniguruma - regular expressions swiss army knife
 * yajl-ruby - a quick and elegant JSON parser
 
+== Usage
+
+See lib/langusta/language_detection_facade.rb for an example, a canonical way to use the library is through this class.
+
 == Compatibility
 
 * Ruby 1.8.7
