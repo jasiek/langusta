@@ -1,7 +1,7 @@
 require 'test/helper'
 
 class FalsifiedTest < Test::Unit::TestCase
-  ITERATIONS = 10
+  ITERATIONS = 1_000
 
   def test_incorrect_guesses
     factory = DetectorFactory.new
