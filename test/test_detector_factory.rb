@@ -6,11 +6,23 @@ class DetectorFactoryTest < Test::Unit::TestCase
     factory = DetectorFactory.new
 
     factory.add_profile(profile, 0, 1)
-    assert_raises(LangDetectException) do
-      factory.add_profile(profile, 1, 1)
-    end
     
     detector = factory.create(0.123)
     assert_equal(0.123, detector.alpha)
+  end
+
+  def test_exceptions
+    profile = LangProfile.new
+    factory = DetectorFactory.new
+
+    assert_raises(NoProfilesLoadedError) do
+      factory.create()
+    end
+
+    factory.add_profile(profile, 0, 2)
+
+    assert_raises(DuplicateProfilesError) do
+      factory.add_profile(profile, 1, 2)
+    end
   end
 end

@@ -49,4 +49,12 @@ class DetectorTest < Test::Unit::TestCase
     detector.append(UCS2String.new("\x30\x42\x30\x42\x30\x42\x30\x42\x00a"))
     assert_equal("jp", detector.detect())
   end
+
+  def test_exceptions
+    detector = @factory.create()
+    detector.append(UCS2String.new(''))
+    assert_raises(NoFeaturesInTextError) do
+      detector.detect()
+    end
+  end
 end

@@ -32,5 +32,9 @@ module Langusta
   PROFILES_PATH = File.join(ABSOLUTE_PATH, 'profiles')
   UPPERCASE_BIN = File.join(ABSOLUTE_PATH, 'data/uppercase.bin')
   MESSAGES_PROPERTIES = File.join(ABSOLUTE_PATH, 'data/messages.properties')
+
+  class DuplicateProfilesError < StandardError; end
+  class NoProfilesLoadedError < StandardError; end
+  class NoFeaturesInTextError < StandardError; end
 end
 

@@ -45,7 +45,7 @@ module Langusta
     def detect_block
       cleaning_text()
       ngrams = extract_ngrams()
-      raise "no features in text" if ngrams.empty?
+      raise NoFeaturesInTextError if ngrams.empty?
       @langprob = Array.new(@lang_list.length, 0.0)
 
       @n_trial.times do
@@ -68,6 +68,7 @@ module Langusta
       end
     end
 
+    # TODO: this looks like it's not referenced anywhere.
     def set_prior_map(prior_map)
       @prior_map = Array.new[@lang_list.length]
       sump = 0.0
@@ -99,7 +100,6 @@ module Langusta
       maxp
     end
 
-    private
     def cleaning_text
       non_latin_count = latin_count = 0
       @text.each_char do |c|

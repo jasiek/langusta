@@ -1,6 +1,4 @@
 module Langusta
-  class LangDetectException < StandardError; end
-
   class DetectorFactory
     attr_reader :word_lang_prob_map, :lang_list
 
@@ -14,7 +12,7 @@ module Langusta
     # @param [Fixnum] index at which the language profile is to be added.
     # @param [Fixnum] counts how many language profiles are to be added to this factory in total.
     def add_profile(profile, index, langsize)
-      raise LangDetectException.new("duplicate the same language profile") if @lang_list.include?(profile.name)
+      raise DuplicateProfilesError.new(profile.name) if @lang_list.include?(profile.name)
       @lang_list << profile.name
       profile.freq.keys.each do |word|
         if not @word_lang_prob_map.has_key?(word)
@@ -39,7 +37,7 @@ module Langusta
 
     private
     def create_detector
-      raise LangDetectException.new("need to load profiles") if @lang_list.length == 0
+      raise NoProfilesLoadedError if @lang_list.empty?
       detector = Detector.new(self)
     end
   end
