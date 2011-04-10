@@ -12,7 +12,7 @@ require 'oniguruma'
 require 'yajl'
 
 module Langusta
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   autoload :RegexHelper, 'langusta/regex_helper'
   autoload :UCS2String, 'langusta/ucs2_string'
