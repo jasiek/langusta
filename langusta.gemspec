@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{langusta}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Szumiec"]
-  s.date = %q{2011-04-08}
+  s.date = %q{2011-04-10}
   s.default_executable = %q{langusta}
-  s.description = %q{Uses naive bayesian filter.}
+  s.description = %q{Highly accurate language detection library, uses naive bayesian filter.}
   s.email = %q{jan.szumiec@gmail.com}
   s.executables = ["langusta"]
   s.extra_rdoc_files = [
