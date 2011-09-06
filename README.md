@@ -1,25 +1,38 @@
-= langusta
+# langusta
 
 Langusta is a language detection library based on a method designed and implemented by Nakatani Shuyo. This work is almost a direct 1-to-1 port of the original Java library which can be found at: http://code.google.com/p/language-detection.
 
 For more information about the method (naive bayesian classification), have a look at this presentation: http://www.slideshare.net/shuyo/language-detection-library-for-java. This implementation uses some resources from the original library, specifically the language profiles.
 
-== Runtime dependencies
+## Runtime dependencies
 
 * oniguruma - regular expressions swiss army knife
 * yajl-ruby - a quick and elegant JSON parser
 
-== Usage
+## Usage
 
-See lib/langusta/language_detection_facade.rb for an example, a canonical way to use the library is through this class.
+The simplest way to use this library is to use the facade provided with this package.
 
-== Compatibility
+```ruby
+require 'langusta'
+facade = Langusta::LanguageDetectionFacade.new
+ucs2string = Langusta::UCS2String.from_utf8('zażółć gęślą jaźń')
+facade.detect(ucs2string) #=> 'pl'
+```
+
+If you don't need all 49 profiles, you can boost your detection speed and reduce memory consumption by writing your own facade-like class.
+
+## Compatibility
 
 * Ruby 1.8.7
 
 A version for Ruby 1.9 is in the works.
 
-== Contributing to langusta
+## Caveats
+
+Langusta is a memory hog - 49 profiles will take up about 80MB of RAM.
+
+## Contributing to langusta
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -29,6 +42,7 @@ A version for Ruby 1.9 is in the works.
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2011 Jan Szumiec. See LICENSE.txt for further details.
+
