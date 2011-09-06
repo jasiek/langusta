@@ -1,5 +1,7 @@
 module Langusta
   class DetectorFactory
+    include Inspector
+
     attr_reader :word_lang_prob_map, :lang_list
 
     def initialize
@@ -33,6 +35,10 @@ module Langusta
       else
         create_detector()
       end
+    end
+
+    def inspect
+      "#<#{self.class.name}:0x#{object_ptr} (#{@lang_list.size} profile(s))"
     end
 
     private

@@ -14,6 +14,7 @@ require 'yajl'
 module Langusta
   VERSION = '0.1.1'
 
+  autoload :Inspector, 'langusta/inspector'
   autoload :RegexHelper, 'langusta/regex_helper'
   autoload :UCS2String, 'langusta/ucs2_string'
   autoload :Language, 'langusta/language'
