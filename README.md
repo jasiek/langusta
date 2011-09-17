@@ -4,6 +4,10 @@ Langusta is a language detection library based on a method designed and implemen
 
 For more information about the method (naive bayesian classification), have a look at this presentation: http://www.slideshare.net/shuyo/language-detection-library-for-java. This implementation uses some resources from the original library, specifically the language profiles.
 
+## Build status
+
+[![Build Status](http://travis-ci.org/jasiek/langusta.png)](http://travis-ci.org/jasiek/langusta)
+
 ## Runtime dependencies
 
 * oniguruma - regular expressions swiss army knife
