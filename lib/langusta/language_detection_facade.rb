@@ -3,8 +3,8 @@ module Langusta
     def initialize
       @factory = DetectorFactory.new
       profiles = load_profiles()
-      profiles.each_with_index do |profile, index|
-        @factory.add_profile(profile, index, profiles.length)
+      profiles.each do |profile|
+        @factory.add_profile(profile)
       end
     end
 

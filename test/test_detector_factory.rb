@@ -5,7 +5,7 @@ class DetectorFactoryTest < Test::Unit::TestCase
     profile = LangProfile.new
     factory = DetectorFactory.new
 
-    factory.add_profile(profile, 0, 1)
+    factory.add_profile(profile)
     
     detector = factory.create(0.123)
     assert_equal(0.123, detector.alpha)
@@ -19,10 +19,10 @@ class DetectorFactoryTest < Test::Unit::TestCase
       factory.create()
     end
 
-    factory.add_profile(profile, 0, 2)
+    factory.add_profile(profile)
 
     assert_raises(DuplicateProfilesError) do
-      factory.add_profile(profile, 1, 2)
+      factory.add_profile(profile)
     end
   end
 
@@ -30,7 +30,7 @@ class DetectorFactoryTest < Test::Unit::TestCase
     profile = LangProfile.new
     factory = DetectorFactory.new
 
-    factory.add_profile(profile, 0, 1)
+    factory.add_profile(profile)
 
     assert_match(Regexp.new(factory.object_ptr), factory.inspect)
     assert_match(/1 profile\(s\)/, factory.inspect)

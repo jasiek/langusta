@@ -64,8 +64,8 @@ EOF
 
     def initialize_factory(profile_directory)
       profiles = load_profiles(profile_directory)
-      profiles.each_with_index do |profile, index|
-        @detector_factory.add_profile(profile, index, profiles.length)
+      profiles.each do |profile|
+        @detector_factory.add_profile(profile)
       end
     end
 

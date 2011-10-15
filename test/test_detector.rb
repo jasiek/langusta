@@ -11,19 +11,19 @@ class DetectorTest < Test::Unit::TestCase
     TRAINING_EN.split(/ /).each do |w|
       profile_en.add(UCS2String.new(w))
     end
-    @factory.add_profile(profile_en, 0, 3)
+    @factory.add_profile(profile_en)
 
     profile_fr = LangProfile.new("fr")
     TRAINING_FR.split(/ /).each do |w|
       profile_fr.add(UCS2String.new(w))
     end
-    @factory.add_profile(profile_fr, 1, 3)
+    @factory.add_profile(profile_fr)
 
     profile_jp = LangProfile.new("jp")
     TRAINING_JP.split(/ /).each do |w|
       profile_jp.add(UCS2String.new(w))
     end
-    @factory.add_profile(profile_jp, 2, 3)
+    @factory.add_profile(profile_jp)
   end
 
   def test_detector1

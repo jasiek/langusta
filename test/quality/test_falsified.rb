@@ -8,8 +8,8 @@ class FalsifiedTest < Test::Unit::TestCase
     profiles = Dir[File.join(PROFILES_PATH, '*')].map do |filename|
       LangProfile.load_from_file(filename)
     end
-    profiles.each_with_index do |profile, index|
-      factory.add_profile(profile, index, profiles.length)
+    profiles.each do |profile|
+      factory.add_profile(profile)
     end
 
     incorrect_guesses = 0.0

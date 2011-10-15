@@ -169,7 +169,8 @@ module Langusta
       # verbose
       weight = alpha / BASE_FREQ
       prob.length.times do |i|
-        prob[i] *= weight + lang_prob_map[i]
+        # tiny workaround for nil values in word freq array
+        prob[i] *= weight + (lang_prob_map[i] || 0.0)
       end
       true
     end

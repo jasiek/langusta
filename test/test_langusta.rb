@@ -3,11 +3,10 @@ require 'test/helper'
 class LangustaTest < Test::Unit::TestCase
 
   FACTORY = DetectorFactory.new
-  profiles = Dir[File.join(PROFILES_PATH, '*')].map do |filename|
-    LangProfile.load_from_file(filename)
-  end
-  profiles.each_with_index do |profile, index|
-    FACTORY.add_profile(profile, index, profiles.length)
+
+  Dir[File.join(PROFILES_PATH, '*')].each do |filename|
+    profile = LangProfile.load_from_file(filename)
+    FACTORY.add_profile(profile)
   end
 
   Dir['test/test_data/*'].each do |filename|
