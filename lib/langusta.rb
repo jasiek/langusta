@@ -2,14 +2,10 @@ $: << File.expand_path(File.dirname(__FILE__))
 
 require 'rubygems'
 require 'bundler'
-Bundler.setup
+Bundler.require
 
 require 'optparse'
 require 'iconv'
-
-# Required gems
-require 'oniguruma'
-require 'yajl'
 
 module Langusta
   VERSION = '0.1.1'

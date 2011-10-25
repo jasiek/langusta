@@ -4,7 +4,7 @@ platform :mri_18 do
   gem "oniguruma", "1.1.0"
 end
 
-gem "yajl-ruby", "0.8.2"
+gem "yajl-ruby", "0.8.2", :require => 'yajl'
 
 group :development do
   gem "bundler"
