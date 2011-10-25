@@ -1,11 +1,16 @@
 source :gemcutter
-gem "oniguruma", "1.1.0"
+
+platform :mri_18 do
+  gem "oniguruma", "1.1.0"
+end
+
 gem "yajl-ruby", "0.8.2"
 
 group :development do
-  gem "bundler", "~> 1.0.0"
-  gem "jeweler", "~> 1.5.2"
+  gem "bundler"
+  gem "jeweler"
   gem "rcov"
   gem "mocha"
-  gem "ruby-debug"
+  gem "ruby-debug",   :platforms => :mri_18
+  gem "ruby-debug19", :platforms => :mri_19 unless RUBY_VERSION == "1.9.3"
 end
