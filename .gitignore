@@ -41,3 +41,9 @@ tmtags
 # For vim:
 *.swp
 vendor
+
+# IntelliJ
+.idea
+
+# rubinius?
+.rbx
