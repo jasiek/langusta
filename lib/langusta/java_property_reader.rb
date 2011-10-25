@@ -3,7 +3,7 @@ module Langusta
     # This is a minimal implementation, don't expect this to actually work.
 
     def initialize(filename)
-      @lines = File.open(filename).read
+      @lines = File.open(filename).readlines
       parse()
     end
 

@@ -7,11 +7,11 @@ module Langusta
     attr_reader :underlying
 
     def self.from_utf8(utf8_string)
-      self.new(UTF8_TO_UCS2BE_ICONV.iconv(utf8_string))
+      self.new(Converter.to_ucs2_string(utf8_string))
     end
 
     def initialize(underlying)
-      @underlying = UCS2BE_TO_UCS2BE_ICONV.iconv(underlying)
+      @underlying = underlying
     end
 
     def [](index)
@@ -66,5 +66,21 @@ module Langusta
       @underlying.size / 2
     end
     alias :length :size
+
+    # String encoding converters for different versions of the interpreter.
+
+    module Ruby18Converter
+      def self.to_ucs2_string(ruby_utf8_string)
+        Iconv.conv('ucs-2be', 'utf-8', ruby_utf8_string)
+      end
+    end
+
+    module Ruby19Converter
+      def self.to_ucs2_string(ruby_utf8_string)
+        ruby_utf8_string.encode('utf-16be')
+      end
+    end
+
+    Converter = (RUBY_VERSION < "1.9") ? Ruby18Converter : Ruby19Converter
   end
 end
