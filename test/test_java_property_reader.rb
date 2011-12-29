@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'test/helper'
 
 class JavaPropertyReaderTest < Test::Unit::TestCase

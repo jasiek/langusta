@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'test/helper'
 
 class CommandTest < Test::Unit::TestCase
