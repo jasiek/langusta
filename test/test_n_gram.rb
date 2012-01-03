@@ -7,50 +7,50 @@ class NGramTest < Test::Unit::TestCase
   end
 
   def test_normalize_with_latin
-    assert_equal("\x00 ", NGram.normalize("\x00\x00")) # \0
-    assert_equal("\x00 ", NGram.normalize("\x00\x09")) # <control>
-    assert_equal("\x00 ", NGram.normalize("\x00\x20")) # space
-    assert_equal("\x00 ", NGram.normalize("\x00\x30")) # 0
-    assert_equal("\x00 ", NGram.normalize("\x00\x40")) # @
-    assert_equal("\x00\x41", NGram.normalize("\x00\x41")) # A
-    assert_equal("\x00\x5a", NGram.normalize("\x00\x5a")) # Z
-    assert_equal("\x00 ", NGram.normalize("\x00\x5b")) # [
-    assert_equal("\x00 ", NGram.normalize("\x00\x60")) # `
-    assert_equal("\x00\x61", NGram.normalize("\x00\x61")) # a
-    assert_equal("\x00\x7a", NGram.normalize("\x00\x7a")) # z
-    assert_equal("\x00 ", NGram.normalize("\x00\x7b")) # {
-    assert_equal("\x00 ", NGram.normalize("\x00\x7f")) # <control>
-    assert_equal("\x00\x80", NGram.normalize("\x00\x80")) # <control>
-    assert_equal("\x00 ", NGram.normalize("\x00\xa0")) # <control>
-    assert_equal("\x00\xa1", NGram.normalize("\x00\xa1")) # <control>
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x00]))) # \0
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x09]))) # <control>
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x20]))) # space
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x30]))) # 0
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x40]))) # @
+    assert_equal(u16_str([0x41]), NGram.normalize(u16_str([0x41]))) # A
+    assert_equal(u16_str([0x5a]), NGram.normalize(u16_str([0x5a]))) # Z
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x5b]))) # [
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x60]))) # `
+    assert_equal(u16_str([0x61]), NGram.normalize(u16_str([0x61]))) # a
+    assert_equal(u16_str([0x7a]), NGram.normalize(u16_str([0x7a]))) # z
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x7b]))) # {
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0x7f]))) # <control>
+    assert_equal(u16_str([0x80]), NGram.normalize(u16_str([0x80]))) # <control>
+    assert_equal(u16_str([0x20]), NGram.normalize(u16_str([0xa0]))) # <control>
+    assert_equal(u16_str([0xa1]), NGram.normalize(u16_str([0xa1]))) # <control>
   end
 
   def test_normalize_with_cjk_kanji
-    assert_equal("\x4e\x00", NGram.normalize("\x4e\x00"))
-    assert_equal("\x4e\x01", NGram.normalize("\x4e\x01"))
-    assert_equal("\x4e\x02", NGram.normalize("\x4e\x02"))
-    assert_equal("\x4e\x01", NGram.normalize("\x4e\x03"))
-    assert_equal("\x4e\x04", NGram.normalize("\x4e\x04"))
-    assert_equal("\x4e\x05", NGram.normalize("\x4e\x05"))
-    assert_equal("\x4e\x06", NGram.normalize("\x4e\x06"))
-    assert_equal("\x4e\x07", NGram.normalize("\x4e\x07"))
-    assert_equal("\x4e\x08", NGram.normalize("\x4e\x08"))
-    assert_equal("\x4e\x09", NGram.normalize("\x4e\x09"))
-    assert_equal("\x4e\x10", NGram.normalize("\x4e\x10"))
-    assert_equal("\x4e\x11", NGram.normalize("\x4e\x11"))
-    assert_equal("\x4e\x12", NGram.normalize("\x4e\x12"))
-    assert_equal("\x4e\x13", NGram.normalize("\x4e\x13"))
-    assert_equal("\x4e\x14", NGram.normalize("\x4e\x14"))
-    assert_equal("\x4e\x15", NGram.normalize("\x4e\x15"))
-    assert_equal("\x4e\x1e", NGram.normalize("\x4e\x1e"))
-    assert_equal("\x4e\x1f", NGram.normalize("\x4e\x1f"))
-    assert_equal("\x4e\x20", NGram.normalize("\x4e\x20"))
-    assert_equal("\x4e\x21", NGram.normalize("\x4e\x21"))
-    assert_equal("\x4e\x22", NGram.normalize("\x4e\x22"))
-    assert_equal("\x4e\x23", NGram.normalize("\x4e\x23"))
-    assert_equal("\x4e\x13", NGram.normalize("\x4e\x24"))
-    assert_equal("\x4e\x13", NGram.normalize("\x4e\x25"))
-    assert_equal("\x4e\x30", NGram.normalize("\x4e\x30"))
+    assert_equal(u16_str([0x4e00]), NGram.normalize(u16_str([0x4e00])))
+    assert_equal(u16_str([0x4e01]), NGram.normalize(u16_str([0x4e01])))
+    assert_equal(u16_str([0x4e02]), NGram.normalize(u16_str([0x4e02])))
+    assert_equal(u16_str([0x4e01]), NGram.normalize(u16_str([0x4e03])))
+    assert_equal(u16_str([0x4e04]), NGram.normalize(u16_str([0x4e04])))
+    assert_equal(u16_str([0x4e05]), NGram.normalize(u16_str([0x4e05])))
+    assert_equal(u16_str([0x4e06]), NGram.normalize(u16_str([0x4e06])))
+    assert_equal(u16_str([0x4e07]), NGram.normalize(u16_str([0x4e07])))
+    assert_equal(u16_str([0x4e08]), NGram.normalize(u16_str([0x4e08])))
+    assert_equal(u16_str([0x4e09]), NGram.normalize(u16_str([0x4e09])))
+    assert_equal(u16_str([0x4e10]), NGram.normalize(u16_str([0x4e10])))
+    assert_equal(u16_str([0x4e11]), NGram.normalize(u16_str([0x4e11])))
+    assert_equal(u16_str([0x4e12]), NGram.normalize(u16_str([0x4e12])))
+    assert_equal(u16_str([0x4e13]), NGram.normalize(u16_str([0x4e13])))
+    assert_equal(u16_str([0x4e14]), NGram.normalize(u16_str([0x4e14])))
+    assert_equal(u16_str([0x4e15]), NGram.normalize(u16_str([0x4e15])))
+    assert_equal(u16_str([0x4e1e]), NGram.normalize(u16_str([0x4e1e])))
+    assert_equal(u16_str([0x4e1f]), NGram.normalize(u16_str([0x4e1f])))
+    assert_equal(u16_str([0x4e20]), NGram.normalize(u16_str([0x4e20])))
+    assert_equal(u16_str([0x4e21]), NGram.normalize(u16_str([0x4e21])))
+    assert_equal(u16_str([0x4e22]), NGram.normalize(u16_str([0x4e22])))
+    assert_equal(u16_str([0x4e23]), NGram.normalize(u16_str([0x4e23])))
+    assert_equal(u16_str([0x4e13]), NGram.normalize(u16_str([0x4e24])))
+    assert_equal(u16_str([0x4e13]), NGram.normalize(u16_str([0x4e25])))
+    assert_equal(u16_str([0x4e30]), NGram.normalize(u16_str([0x4e30])))
   end
 
   def test_ngram
@@ -58,46 +58,58 @@ class NGramTest < Test::Unit::TestCase
     (0..4).each do |n|
       assert_nil(ngram.get(n))
     end
-    ngram.add_char("\x00 ")
+    ngram.add_char(u16_str([0x20]))
     (1..3).each do |n|
       assert_nil(ngram.get(n))
     end
-    ngram.add_char("\x00A")
-    assert_equal(UCS2String.new("\x00A"), ngram.get(1))
-    assert_equal(UCS2String.new("\x00 \x00A"), ngram.get(2))
-    assert_nil(ngram.get(3))
-    ngram.add_char("\x06\xcc")
-    assert_equal(UCS2String.new("\x06\x4a"), ngram.get(1))
-    assert_equal(UCS2String.new("\x00A\x06\x4a"), ngram.get(2))
-    assert_equal(UCS2String.new("\x00 \x00A\x06\x4a"), ngram.get(3))
-    ngram.add_char("\x1e\xa0")
-    assert_equal(UCS2String.new("\x1e\xc3"), ngram.get(1))
-    assert_equal(UCS2String.new("\x06\x4a\x1e\xc3"), ngram.get(2))
-    assert_equal(UCS2String.new("\x00A\x06\x4a\x1e\xc3"), ngram.get(3))
-    ngram.add_char("\x30\x44")
-    assert_equal(UCS2String.new("\x30\x42"), ngram.get(1))
-    assert_equal(UCS2String.new("\x1e\xc3\x30\x42"), ngram.get(2))
-    assert_equal(UCS2String.new("\x06\x4a\x1e\xc3\x30\x42"), ngram.get(3))
 
-    ngram.add_char("\x30\xa4")
-    assert_equal(UCS2String.new("\x30\xa2"), ngram.get(1))
-    assert_equal(UCS2String.new("\x30\x42\x30\xa2"), ngram.get(2))
-    assert_equal(UCS2String.new("\x1e\xc3\x30\x42\x30\xa2"), ngram.get(3))
-    ngram.add_char("\x31\x06")
-    assert_equal(UCS2String.new("\x31\x05"), ngram.get(1))
-    assert_equal(UCS2String.new("\x30\xa2\x31\x05"), ngram.get(2))
-    assert_equal(UCS2String.new("\x30\x42\x30\xa2\x31\x05"), ngram.get(3))
-    ngram.add_char("\xac\x01")
-    assert_equal(UCS2String.new("\xac\x00"), ngram.get(1))
-    assert_equal(UCS2String.new("\x31\x05\xac\x00"), ngram.get(2))
-    assert_equal(UCS2String.new("\x30\xa2\x31\x05\xac\x00"), ngram.get(3))
-    ngram.add_char("\x20\x10")
-    assert_nil(ngram.get(1))
-    assert_equal(UCS2String.new("\xac\x00\x00 "), ngram.get(2))
-    assert_equal(UCS2String.new("\x31\x05\xac\x00\x00 "), ngram.get(3))
-    ngram.add_char("\x00a")
-    assert_equal(UCS2String.new("\x00a"), ngram.get(1))
-    assert_equal(UCS2String.new("\x00 \x00a"), ngram.get(2))
+    ngram.add_char(u16_str([0x000a]))
+    assert_equal(u16_str([0x000a]), ngram.get(1))
+    assert_equal(u16_str([0x0020, 0x000a]), ngram.get(2))
     assert_nil(ngram.get(3))
+
+    ngram.add_char(u16_str([0x06cc]))
+    assert_equal(u16_str([0x064a]), ngram.get(1))
+    assert_equal(u16_str([0x000a, 0x64a]), ngram.get(2))
+    assert_equal(u16_str([0x0020, 0x00a, 0x064a]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x1ea0]))
+    assert_equal(u16_str([0x1ec3]), ngram.get(1))
+    assert_equal(u16_str([0x064a, 0x1ec3]), ngram.get(2))
+    assert_equal(u16_str([0x000a, 0x064a, 0x1ec3]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x3044]))
+    assert_equal(u16_str([0x3042]), ngram.get(1))
+    assert_equal(u16_str([0x1ec3, 0x3042]), ngram.get(2))
+    assert_equal(u16_str([0x064a, 0x1ec3, 0x3042]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x30a4]))
+    assert_equal(u16_str([0x30a2]), ngram.get(1))
+    assert_equal(u16_str([0x3042, 0x30a2]), ngram.get(2))
+    assert_equal(u16_str([0x1ec3, 0x3042, 0x30a2]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x3106]))
+    assert_equal(u16_str([0x3105]), ngram.get(1))
+    assert_equal(u16_str([0x30a2, 0x3105]), ngram.get(2))
+    assert_equal(u16_str([0x3042, 0x30a2, 0x3105]), ngram.get(3))
+
+    ngram.add_char(u16_str([0xac01]))
+    assert_equal(u16_str([0xac00]), ngram.get(1))
+    assert_equal(u16_str([0x3105, 0xac00]), ngram.get(2))
+    assert_equal(u16_str([0x30a2, 0x3105, 0xac00]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x2010]))
+    assert_nil(ngram.get(1))
+    assert_equal(u16_str([0xac00, 0x0020]), ngram.get(2))
+    assert_equal(u16_str([0x3105, 0xac00, 0x0020]), ngram.get(3))
+
+    ngram.add_char(u16_str([0x000a]))
+    assert_equal(u16_str([0x000a]), ngram.get(1))
+    assert_equal(u16_str([0x0020, 0x000a]), ngram.get(2))
+    assert_nil(ngram.get(3))
+  end
+
+  def u16_str(array_of_codepoints)
+    array_of_codepoints.pack('n*')
   end
 end
