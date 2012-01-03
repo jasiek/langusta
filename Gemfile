@@ -6,9 +6,10 @@ end
 
 gem "yajl-ruby", "0.8.2", :require => 'yajl'
 
-group :development do
-  gem "bundler"
-  gem "jeweler"
+gem "bundler"
+gem "jeweler"
+
+group :test do
   gem "rcov"
   gem "mocha"
   gem "ruby-debug",   :platforms => :mri_18
