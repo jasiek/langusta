@@ -28,8 +28,7 @@ module Langusta
       codepoints = value.scan(/([0-9A-F]{4})/)
       codepoints.map do |cp|
         int_cp = cp.first.to_i(16)
-        [int_cp / 256, int_cp % 256].pack("c*")
-      end.join
+      end
     end
   end
 end
