@@ -7,26 +7,26 @@ module Langusta
       @target = tag
       @threshold = threshold
       @count = 0
-      @buffer = UCS2String.new("")
+      @buffer = []
       @tag = nil
     end
 
     def add(line)
       if @target == @tag && line
-        @buffer << line
+        @buffer += line
       end
     end
 
     def clear
       @tag = nil
-      @buffer = UCS2String.new("")
+      @buffer = []
     end
 
     def close_tag(profile)
       if profile && @tag == @target && @buffer.length > @threshold
         gram = NGram.new
-        @buffer.each_char do |char|
-          gram.add_char(char)
+        @buffer.each do |codepoint|
+          gram.add_char(codepoint)
           (1..NGram::N_GRAM).each do |n|
             profile.add(gram.get(n))
           end

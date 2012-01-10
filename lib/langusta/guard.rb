@@ -11,5 +11,12 @@ module Langusta
       raise ArgumentError.new([_method, ':', codepoint.to_s(16)].join) unless (0x0000..0xffff).include?(codepoint)
     end
     
+    def self.codepoint_array(array, _method)
+      return unless $debug
+      raise TypeError.new("#{_method}: expected Array, got: #{array.class}") unless array.is_a?(Array)
+      cp = array.find do |cp|
+        ! (0x0000..0xffff).include?(cp)
+      end && (raise ArgumentError.new("#{_method}: bad codepoint: #{cp}"))
+    end
   end
 end
