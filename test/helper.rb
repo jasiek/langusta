@@ -17,3 +17,5 @@ require 'langusta'
 class Test::Unit::TestCase
   include Langusta
 end
+
+$debug = true

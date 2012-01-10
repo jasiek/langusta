@@ -3,17 +3,10 @@ module Langusta
   # constructed on a character by character basis.
   class NGram
     N_GRAM = 3
-    UCS2_SPACE = "\x00\x20"
+    UCS2_SPACE = 0x0020
 
     def self.calculate_latin1_excluded
-      internal_hash = JavaPropertyReader.new(MESSAGES_PROPERTIES).underlying_hash
-      _, value = internal_hash.find do |k, v|
-        k == "NGram.LATIN1_EXCLUDE"
-      end
-      
-      (0..(value.length - 2)).step(2).map do |index|
-        value[index, 2]
-      end
+      JavaPropertyReader.new(MESSAGES_PROPERTIES)["NGram.LATIN1_EXCLUDE"]
     end
 
     LATIN1_EXCLUDED = self.calculate_latin1_excluded()
@@ -28,10 +21,9 @@ module Langusta
       internal_hash.select do |key, _|
         /KANJI_[0-9]{1}/ =~ key
       end.each do |_, chars|
-        key = chars[0..1]
-        m[key] = key
-        (2..(chars.length - 2)).step(2) do |n|
-          m[chars[n, 2]] = key
+        key = chars.first
+        chars.each do |cp|
+          m[cp] = key
         end
       end
       m
@@ -44,27 +36,27 @@ module Langusta
       block = UnicodeBlock.of(ch)
       case block
       when UnicodeBlock::BASIC_LATIN
-        (ch < "\x00A" || (ch < "\x00a" && ch > "\x00Z") || ch > "\x00z") ? UCS2_SPACE : ch
+        (ch < 0x0041 || (ch < 0x0061 && ch > 0x005a) || ch > 0x007a) ? UCS2_SPACE : ch
       when UnicodeBlock::LATIN_1_SUPPLEMENT
         LATIN1_EXCLUDED.include?(ch) ? UCS2_SPACE : ch
       when UnicodeBlock::GENERAL_PUNCTUATION
         UCS2_SPACE
       when UnicodeBlock::ARABIC
-        (ch == "\x06\xcc") ? "\x06\x4a" : ch
+        (ch == 0x06cc) ? 0x064a : ch
       when UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
-        (ch >= "\x1e\xa0") ? "\x1e\xc3" : ch
+        (ch >= 0x1ea0) ? 0x1ec3 : ch
       when UnicodeBlock::HIRAGANA
-        "\x30\x42"
+        0x3042
       when UnicodeBlock::KATAKANA
-        "\x30\xa2"
+        0x30a2
       when UnicodeBlock::BOPOMOFO
-        "\x31\x05"
+        0x3105
       when UnicodeBlock::BOPOMOFO_EXTENDED
-        "\x31\x05"
+        0x3105
       when UnicodeBlock::CJK_UNIFIED_IDEOGRAPHS
         cjk_map.has_key?(ch) ? cjk_map[ch] : ch
       when UnicodeBlock::HANGUL_SYLLABES
-        "\xac\x00"
+        0xac00
       else
         ch
       end
@@ -77,22 +69,25 @@ module Langusta
 
     # Retrieves an n-sized NGram from the current sequence.
     # @param n [Integer] length of NGram.
-    # @return [UCS2String] n-sized NGram.
+    # @return [Array<Integer>] n-sized NGram.
     def get(n)
       return nil if @capitalword
       len = @grams.length
       return nil if n < 1 || n > 3 || len < n
       if n == 1
         ch = @grams[len - 1]
-        return (ch == UCS2_SPACE) ? nil : UCS2String.new(ch)
+        return (ch == UCS2_SPACE) ? nil : [ch]
       else
-        return UCS2String.new(@grams[len - n, len].join)
+        return @grams[len - n, len]
       end
     end
 
     # Adds a single character to an NGram sequence.
-    # @param character [String[2]] Two-byte Unicode codepoint.
+    # @param character [Fixnum] Two-byte Unicode codepoint.
     def add_char(character)
+      Guard.klass(character, Fixnum, __method__)
+      Guard.codepoint(character, __method__)
+
       character = NGram.normalize(character)
       lastchar = @grams[-1]
       if lastchar == UCS2_SPACE
