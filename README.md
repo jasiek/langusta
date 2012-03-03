@@ -6,11 +6,11 @@ For more information about the method (naive bayesian classification), have a lo
 
 ## Build status
 
-[![Build Status](http://travis-ci.org/jasiek/langusta.png)](http://travis-ci.org/jasiek/langusta)
+[![Build Status](https://secure.travis-ci.org/jasiek/langusta.png?branch=master)](http://travis-ci.org/jasiek/langusta)
 
 ## Runtime dependencies
 
-* oniguruma - regular expressions swiss army knife
+* oniguruma - regular expressions swiss army knife (only required for 1.8.7)
 * yajl-ruby - a quick and elegant JSON parser
 
 ## Usage
@@ -20,17 +20,15 @@ The simplest way to use this library is to use the facade provided with this pac
 ```ruby
 require 'langusta'
 facade = Langusta::LanguageDetectionFacade.new
-ucs2string = Langusta::UCS2String.from_utf8('zażółć gęślą jaźń')
-facade.detect(ucs2string) #=> 'pl'
+facade.detect('zażółć gęślą jaźń') #=> 'pl'
 ```
 
 If you don't need all 49 profiles, you can boost your detection speed and reduce memory consumption by writing your own facade-like class.
 
 ## Compatibility
 
-* Ruby 1.8.7
-
-A version for Ruby 1.9 is in the works.
+* Ruby 1.9.2
+* Ruby 1.9.3
 
 ## Caveats
 
@@ -48,5 +46,5 @@ Langusta is a memory hog - 49 profiles will take up about 80MB of RAM.
 
 ## Copyright
 
-Copyright (c) 2011 Jan Szumiec. See LICENSE.txt for further details.
+Copyright (c) 2011, 2012 Jan Szumiec. See LICENSE.txt for further details.
 
