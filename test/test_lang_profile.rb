@@ -14,52 +14,54 @@ class LangProfileTest < Test::Unit::TestCase
 
   def test_add
     profile = LangProfile.new('en')
-    profile.add(UCS2String.from_utf8("a"))
-    assert_equal(1, profile.freq[UCS2String.from_utf8("a")])
-    profile.add(UCS2String.from_utf8("a"))
-    assert_equal(2, profile.freq[UCS2String.from_utf8("a")])
+    profile.add(utf82cp("a"))
+    assert_equal(1, profile.freq[utf82cp("a")])
+    profile.add(utf82cp("a"))
+    assert_equal(2, profile.freq[utf82cp("a")])
     profile.omit_less_freq()
   end
 
   def test_add_illegally_1
     profile = LangProfile.new
-    profile.add(UCS2String.from_utf8("a"))
-    assert_nil(profile.freq[UCS2String.from_utf8("a")])
+    profile.add(utf82cp("a"))
+    assert_nil(profile.freq[utf82cp("a")])
   end
 
   def test_add_illegally_2
     profile = LangProfile.new('en')
-    profile.add(UCS2String.from_utf8("a"))
-    profile.add(UCS2String.from_utf8(""))
-    profile.add(UCS2String.from_utf8("abcd"))
-    assert_equal(1, profile.freq[UCS2String.from_utf8("a")])
-    assert_nil(profile.freq[UCS2String.from_utf8("")])
-    assert_nil(profile.freq[UCS2String.from_utf8("abcd")])
+    profile.add(utf82cp("a"))
+    profile.add(utf82cp(""))
+    profile.add(utf82cp("abcd"))
+    assert_equal(1, profile.freq[utf82cp("a")])
+    assert_nil(profile.freq[utf82cp("")])
+    assert_nil(profile.freq[utf82cp("abcd")])
   end
 
   def test_omit_less_freq
     profile = LangProfile.new('en')
-    grams = "\x00a \x00b \x00c \x30\x42 \x30\x44 \x30\x46 \x30\x48 \x30\x4a \x30\x4b \x30\x4c \x30\x4d \x30\x4e \x30\x4f".split(/ /)
+    grams = [0x0061, 0x0062, 0x0063, 0x3042, 0x3044, 0x3046, 0x3048,
+             0x304a, 0x304b, 0x304c, 0x304d, 0x304e, 0x304f]
     5.times do
       grams.each do |gram|
-        profile.add(UCS2String.new(gram))
+        profile.add([gram])
       end
     end
-    profile.add(UCS2String.new("\x30\x50"))
+    profile.add([0x3050])
 
-    assert_equal(5, profile.freq[UCS2String.from_utf8("a")])
-    assert_equal(5, profile.freq[UCS2String.new("\x30\x42")])
-    assert_equal(1, profile.freq[UCS2String.new("\x30\x50")])
+    assert_equal(5, profile.freq[utf82cp("a")])
+    assert_equal(5, profile.freq[[0x3042]])
+    assert_equal(1, profile.freq[[0x3050]])
 
     profile.omit_less_freq()
-    assert_nil(profile.freq[UCS2String.from_utf8("a")])
-    assert_equal(5, profile.freq[UCS2String.new("\x30\x42")])
-    assert_nil(profile.freq[UCS2String.new("\x30\x50")])
+
+    assert_nil(profile.freq[utf82cp("a")])
+    assert_equal(5, profile.freq[[0x3042]])
+    assert_nil(profile.freq[[0x3050]])
   end
 
   def test_omit_less_freq_illegally
     profile = LangProfile.new
-    profile.omit_less_freq()
+    assert_nil(profile.omit_less_freq())
   end
 
   def test_load_from_file
@@ -67,11 +69,11 @@ class LangProfileTest < Test::Unit::TestCase
       profile = LangProfile.load_from_file(filename)
       assert_equal(filename.split(/\//).last, profile.name)
       has_content = [
-       profile.freq[UCS2String.from_utf8(" A")], # Latin
-       profile.freq[UCS2String.new("\x06\x0c")], # Arabic
-       profile.freq[UCS2String.new("\x0a\x85")], # Gujarati
-       profile.freq[UCS2String.new("\x09\x05")], # Hindi
-       profile.freq[UCS2String.new("\x30\x01")], # Japanese
+       profile.freq[utf82cp(" A")], # Latin
+       profile.freq[[0x060c]], # Arabic
+       profile.freq[[0x0a85]], # Gujarati
+       profile.freq[[0x0905]], # Hindi
+       profile.freq[[0x3001]], # Japanese
       ].any?
       assert(has_content, profile.inspect)
     end

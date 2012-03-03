@@ -13,15 +13,12 @@ module Langusta
       MAIL_REGEX = ORegexp.new(_u16("[-_.0-9A-Za-z]+@[-_0-9A-Za-z]+[-_.0-9A-Za-z]+"), "", "UTF_16BE", "java")
       SPACE_REGEX = ORegexp.new(_u16(" +"), "", "UTF16_BE", "java")
     else
-      def self._u16(string)
-        string.force_encoding("ucs-2be")
-      end
-
-      ROMAN_REGEX = Regexp.new(_u16("^[A-Za-z]$"))
-      INCL_ROMAN_REGEX = Regexp.new(_u16(".*[A-Za-z].*"))
-      URL_REGEX = Regexp.new(_u16("https?://[-_.?&~;+=/#0-9A-Za-z]+"))
-      MAIL_REGEX = Regexp.new(_u16("[-_.0-9A-Za-z]+@[-_0-9A-Za-z]+[-_.0-9A-Za-z]+"))
-      SPACE_REGEX = Regexp.new(_u16(" +"))
+      # /ui stands for UTF-8 case-insensitive regexp.
+      ROMAN_REGEX = /^[a-z]$/ui
+      INCL_ROMAN_REGEX = /.*[a-z].*/ui
+      URL_REGEX = Regexp.new("https?://[-_.?&~;+=/#a-z0-9]+")
+      MAIL_REGEX = /[-_.a-z0-9]+@[-_a-z0-9]+[-_.a-z0-9]+/ui
+      SPACE_REGEX = / +/
     end
   end
 end

@@ -17,7 +17,7 @@ module Langusta
       n_words = json['n_words']
       freq = json['freq'].inject({}) do |acc, kv|
         key, value = kv
-        acc[UCS2String.from_utf8(key)] = value
+        acc[Langusta.utf82cp(key)] = value
         acc
       end
       profile.populate_json(name, freq, n_words)
@@ -35,10 +35,11 @@ module Langusta
     end
 
     # Adds a given NGram to this language profile. This operation is expected to be invoked multiple times for the same arguments.
-    # @param gram [UCS2String]
+    # @param gram [Array<Fixnum>]
     def add(gram)
-      raise TypeError.new("UCS2String or NilClass expected, got: #{gram.class}") unless gram.is_a?(UCS2String) or gram.is_a?(NilClass)
       return if @name.nil? or gram.nil?
+      Guard.klass(gram, Array, __method__)
+
       length = gram.size
       return if length < 1 or length > NGram::N_GRAM
       @n_words[length - 1] += 1
@@ -59,7 +60,7 @@ module Langusta
           @freq.delete(key)
         else
           # temp workaround
-          if RegexHelper::ROMAN_REGEX.match(key.underlying)
+          if RegexHelper::ROMAN_REGEX.match(Langusta.cp2utf8(key))
             roman += count
           end
         end
@@ -69,7 +70,7 @@ module Langusta
         keys2 = Set.new(@freq.keys)
         keys2.each do |key|
           # temp workaround
-          if RegexHelper::INCL_ROMAN_REGEX.match(key.underlying)
+          if RegexHelper::INCL_ROMAN_REGEX.match(Langusta.cp2utf8(key))
             @n_words[key.size - 1] -= @freq[key]
             @freq.delete(key)
           end

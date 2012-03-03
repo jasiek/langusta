@@ -34,5 +34,13 @@ module Langusta
   class DuplicateProfilesError < StandardError; end
   class NoProfilesLoadedError < StandardError; end
   class NoFeaturesInTextError < StandardError; end
+
+  def self.utf82cp(utf8_string)
+    Iconv.conv('ucs-2be', 'utf-8', utf8_string).unpack('n*')
+  end
+
+  def self.cp2utf8(cp_array)
+    Iconv.conv('utf-8', 'ucs-2be', cp_array.pack('n*'))
+  end
 end
 

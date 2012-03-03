@@ -69,9 +69,4 @@ class TagExtractorTest < Test::Unit::TestCase
     assert_equal(str2cp(""), extractor.buffer)
     assert_nil(extractor.tag)
   end
-
-  # All strings in this file are ASCII strings
-  def str2cp(ascii_string)
-    Iconv.conv('ucs-2be', 'ascii', ascii_string).unpack('n*')
-  end
 end
