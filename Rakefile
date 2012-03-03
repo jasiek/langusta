@@ -49,7 +49,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 Rake::TestTask.new('test:quality') do |test|
-  test.libs << 'test/quality'
+  test.libs << 'test/quality' << 'lib' << '.'
   test.pattern = 'test/quality/test_*.rb'
   test.verbose = true
 end

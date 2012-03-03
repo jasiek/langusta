@@ -15,7 +15,7 @@ class LangustaTest < Test::Unit::TestCase
     define_method(("test_%s_language" % [language]).to_sym) do 
       detector = FACTORY.create
       
-      ucs2_content = UCS2String.from_utf8(File.open(filename).read)
+      ucs2_content = Langusta.utf82cp(File.open(filename).read)
       detector = FACTORY.create
       detector.append(ucs2_content)
       

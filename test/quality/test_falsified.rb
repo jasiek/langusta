@@ -18,7 +18,7 @@ class FalsifiedTest < Test::Unit::TestCase
       Dir['test/test_data/*'].each do |filename|
         language = filename.split(/\//).last
         
-        ucs2_content = UCS2String.from_utf8(File.open(filename).read)
+        ucs2_content = Langusta.utf82cp(File.open(filename).read)
         detector = factory.create
         detector.append(ucs2_content)
         
