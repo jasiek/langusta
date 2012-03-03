@@ -31,9 +31,10 @@ module Langusta
   UPPERCASE_BIN = File.join(ABSOLUTE_PATH, 'data/uppercase.bin')
   MESSAGES_PROPERTIES = File.join(ABSOLUTE_PATH, 'data/messages.properties')
 
-  class DuplicateProfilesError < StandardError; end
-  class NoProfilesLoadedError < StandardError; end
-  class NoFeaturesInTextError < StandardError; end
+  class Error < StandardError; end
+  class DuplicateProfilesError < Error; end
+  class NoProfilesLoadedError < Error; end
+  class NoFeaturesInTextError < Error; end
 
   def self.utf82cp(utf8_string)
     Iconv.conv('ucs-2be', 'utf-8', utf8_string).unpack('n*')
