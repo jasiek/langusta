@@ -13,7 +13,7 @@ module Langusta
   autoload :Guard, 'langusta/guard'
   autoload :Inspector, 'langusta/inspector'
   autoload :RegexHelper, 'langusta/regex_helper'
-  autoload :UCS2String, 'langusta/ucs2_string'
+  autoload :Codepoints, 'langusta/codepoints'
   autoload :Language, 'langusta/language'
   autoload :LangProfile, 'langusta/lang_profile'
   autoload :Detector, 'langusta/detector'

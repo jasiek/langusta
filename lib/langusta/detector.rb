@@ -13,7 +13,7 @@ module Langusta
     def initialize(factory)
       @word_lang_prob_map = factory.word_lang_prob_map
       @lang_list = factory.lang_list
-      @text = UCS2String.new('')
+      @text = []
       @langprob = nil
       @alpha = ALPHA_DEFAULT
       @n_trial = 7
@@ -25,13 +25,14 @@ module Langusta
     # Append more text to be recognized.
     # @param text [UCS2String] text to be recognized
     def append(text)
-      raise TypeError.new("Expected: UCS2String, got: #{text.class}") unless text.is_a?(UCS2String)
-      text.gsub!(RegexHelper::URL_REGEX, "\x00\x20")
-      text.gsub!(RegexHelper::MAIL_REGEX, "\x00\x20")
+      Guard.klass(text, Array, __method__)
+
+      Codepoints.gsub!(text, RegexHelper::URL_REGEX, "\x00\x20")
+      Codepoints.gsub!(text, RegexHelper::MAIL_REGEX, "\x00\x20")
       text = text.map do |c|
         NGram.normalize(c)
       end
-      @text = text.gsub!(RegexHelper::SPACE_REGEX, "\x00\x20")
+      @text = Codepoints.gsub!(text, RegexHelper::SPACE_REGEX, "\x00\x20")
     end
 
     # Detect the language.
@@ -102,17 +103,17 @@ module Langusta
 
     def cleaning_text
       non_latin_count = latin_count = 0
-      @text.each_char do |c|
-        if c < "\00z" && c >= "\x00A"
+      @text.each do |c|
+        if c < 0x007a && c > 0x0041 # c > "z" && c < "A"
           latin_count += 1
-        elsif c >= "\x03\x00" && UnicodeBlock.of(c) != UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
+        elsif c >= 0x3000 && UnicodeBlock.of(c) != UnicodeBlock::LATIN_EXTENDED_ADDITIONAL
           non_latin_count += 1
         end
       end
       if latin_count * 2 < non_latin_count
-        text_without_latin = UCS2String.new('')
-        @text.each_char do |c|
-          text_without_latin << c if c > "\x00z" || c < "\x00A"
+        text_without_latin = []
+        @text.each do |c|
+          text_without_latin << c if c > 0x007a || c < 0x0041 # c > "z" || c < "A"
         end
         @text = text_without_latin
       end
@@ -121,7 +122,7 @@ module Langusta
     def extract_ngrams
       list = []
       ngram = NGram.new
-      @text.each_char do |char|
+      @text.each do |char|
         ngram.add_char(char)
         (1..NGram::N_GRAM).each do |n|
           w = ngram.get(n)
