@@ -11,33 +11,27 @@ module Langusta
     # @return [LangProfile]
     def self.load_from_file(filename)
       json = Yajl::Parser.parse(File.new(filename))
-      profile = self.new
 
-      name = json['name']
-      n_words = json['n_words']
       freq = json['freq'].inject({}) do |acc, kv|
         key, value = kv
         acc[Langusta.utf82cp(key)] = value
         acc
       end
-      profile.populate_json(name, freq, n_words)
-      profile
+
+      self.new(json['name'] || (raise CorruptProfileError.new("Missing profile name")),
+               freq,
+               json['n_words'] || (raise CorruptProfileError.new("Missing number of words value")))
     end
 
-    def initialize(name=nil)
-      @name = name
-      @freq = {}
-      @n_words = Array.new(NGram::N_GRAM, 0)
-    end
-
-    def populate_json(name, freq, n_words)
+    def initialize(name, freq={}, n_words = Array.new(NGram::N_GRAM, 0))
+      Guard.klass(name, String, __method__)
       @name, @freq, @n_words = name, freq, n_words
     end
 
     # Adds a given NGram to this language profile. This operation is expected to be invoked multiple times for the same arguments.
     # @param gram [Array<Fixnum>]
     def add(gram)
-      return if @name.nil? or gram.nil?
+      return if gram.nil?
       Guard.klass(gram, Array, __method__)
 
       length = gram.size
@@ -48,7 +42,6 @@ module Langusta
     end
 
     def omit_less_freq
-      return if @name.nil?
       threshold = @n_words[0] / LESS_FREQ_RATIO
       threshold = MINIMUM_FREQ if threshold < MINIMUM_FREQ
       keys = Set.new(@freq.keys)

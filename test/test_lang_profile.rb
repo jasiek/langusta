@@ -3,8 +3,12 @@ require 'test/helper'
 
 class LangProfileTest < Test::Unit::TestCase
   def test_lang_profile
-    profile = LangProfile.new
-    assert_nil(profile.name)
+    assert_raises(ArgumentError) do
+      LangProfile.new
+    end
+    assert_raises(TypeError) do
+      LangProfile.new(nil)
+    end
   end
 
   def test_lang_profile_string_int
@@ -22,9 +26,9 @@ class LangProfileTest < Test::Unit::TestCase
   end
 
   def test_add_illegally_1
-    profile = LangProfile.new
+    profile = LangProfile.new('sample')
     profile.add(utf82cp("a"))
-    assert_nil(profile.freq[utf82cp("a")])
+    assert_equal(1, profile.freq[utf82cp("a")])
   end
 
   def test_add_illegally_2
@@ -60,7 +64,7 @@ class LangProfileTest < Test::Unit::TestCase
   end
 
   def test_omit_less_freq_illegally
-    profile = LangProfile.new
+    profile = LangProfile.new('sample')
     assert_nil(profile.omit_less_freq())
   end
 

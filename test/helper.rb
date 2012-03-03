@@ -18,7 +18,7 @@ class Test::Unit::TestCase
   include Langusta
 
   def str2cp(ascii_string)
-    Iconv.conv('ucs-2be', 'ascii', ascii_string).unpack('n*')
+    Langusta.utf82cp(ascii_string)
   end
 
   def utf82cp(utf8_string)

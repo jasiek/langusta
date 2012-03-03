@@ -3,7 +3,7 @@ require 'test/helper'
 
 class DetectorFactoryTest < Test::Unit::TestCase
   def test_add_profile
-    profile = LangProfile.new
+    profile = LangProfile.new('sample')
     factory = DetectorFactory.new
 
     factory.add_profile(profile)
@@ -13,7 +13,7 @@ class DetectorFactoryTest < Test::Unit::TestCase
   end
 
   def test_exceptions
-    profile = LangProfile.new
+    profile = LangProfile.new('sample')
     factory = DetectorFactory.new
 
     assert_raises(NoProfilesLoadedError) do
@@ -28,7 +28,7 @@ class DetectorFactoryTest < Test::Unit::TestCase
   end
 
   def test_inspect
-    profile = LangProfile.new
+    profile = LangProfile.new('sample')
     factory = DetectorFactory.new
 
     factory.add_profile(profile)
