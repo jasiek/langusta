@@ -27,6 +27,7 @@ If you don't need all 49 profiles, you can boost your detection speed and reduce
 
 ## Compatibility
 
+* Ruby 1.8.7
 * Ruby 1.9.2
 * Ruby 1.9.3
 
