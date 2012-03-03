@@ -2,16 +2,12 @@ module Langusta
   module RegexHelper
     if RUBY_VERSION < "1.9"
       include Oniguruma
-
-      def self._u16(string)
-        string.unpack("U*").pack("n*")
-      end
       
-      ROMAN_REGEX = ORegexp.new(_u16("^[A-Za-z]$"), "", "UTF16_BE", "java")
-      INCL_ROMAN_REGEX = ORegexp.new(_u16(".*[A-Za-z].*"), "", "UTF16_BE", "java")
-      URL_REGEX = ORegexp.new(_u16("https?://[-_.?&~;+=/#0-9A-Za-z]+"), "", "UTF16_BE", "java")
-      MAIL_REGEX = ORegexp.new(_u16("[-_.0-9A-Za-z]+@[-_0-9A-Za-z]+[-_.0-9A-Za-z]+"), "", "UTF_16BE", "java")
-      SPACE_REGEX = ORegexp.new(_u16(" +"), "", "UTF16_BE", "java")
+      ROMAN_REGEX = ORegexp.new("^[a-z]$", :options => OPTION_IGNORECASE)
+      INCL_ROMAN_REGEX = ORegexp.new(".*[a-z].*", :options => OPTION_IGNORECASE)
+      URL_REGEX = ORegexp.new("https?://[-_.?&~;+=/#0-9a-z]+", :options => OPTION_IGNORECASE)
+      MAIL_REGEX = ORegexp.new("[-_.0-9a-z]+@[-_0-9a-z]+[-_.0-9a-z]+", :options => OPTION_IGNORECASE)
+      SPACE_REGEX = ORegexp.new(" +")
     else
       # /ui stands for UTF-8 case-insensitive regexp.
       ROMAN_REGEX = /^[a-z]$/ui

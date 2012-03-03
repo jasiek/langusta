@@ -27,8 +27,9 @@ module Langusta
     def append(text)
       Guard.klass(text, Array, __method__)
 
-      Codepoints.gsub!(text, RegexHelper::URL_REGEX, "\x00\x20")
-      Codepoints.gsub!(text, RegexHelper::MAIL_REGEX, "\x00\x20")
+      text = Codepoints.gsub!(text, RegexHelper::URL_REGEX, "\x00\x20")
+      text = Codepoints.gsub!(text, RegexHelper::MAIL_REGEX, "\x00\x20")
+
       text = text.map do |c|
         NGram.normalize(c)
       end
