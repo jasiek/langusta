@@ -5,7 +5,7 @@ require 'bundler'
 Bundler.require
 
 require 'optparse'
-require 'iconv'
+require 'iconv' if RUBY_VERSION < "1.9"
 
 module Langusta
   VERSION = '0.1.1'
@@ -36,12 +36,31 @@ module Langusta
   class NoProfilesLoadedError < Error; end
   class NoFeaturesInTextError < Error; end
 
+  UTF82CP_SELECTOR = RUBY_VERSION < "1.9" ? :utf82cp_18 : :utf82cp_19
+  CP2UTF8_SELECTOR = RUBY_VERSION < "1.9" ? :cp2utf8_18 : :cp2utf8_19
+
   def self.utf82cp(utf8_string)
+    send(UTF82CP_SELECTOR, utf8_string)
+  end
+
+  def self.utf82cp_18(utf8_string)
     Iconv.conv('ucs-2be', 'utf-8', utf8_string).unpack('n*')
   end
 
+  def self.utf82cp_19(utf8_string)
+    utf8_string.encode('ucs-2be').unpack('n*')
+  end
+
   def self.cp2utf8(cp_array)
+    send(CP2UTF8_SELECTOR, cp_array)
+  end
+
+  def self.cp2utf8_18(cp_array)
     Iconv.conv('utf-8', 'ucs-2be', cp_array.pack('n*'))
+  end
+
+  def self.cp2utf8_19(cp_array)
+    cp_array.pack('n*').force_encoding('ucs-2be').encode('utf-8')
   end
 end
 
