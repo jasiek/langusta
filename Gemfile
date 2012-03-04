@@ -10,8 +10,5 @@ gem "bundler"
 gem "jeweler"
 
 group :test do
-  gem "rcov"
   gem "mocha"
-  gem "ruby-debug",   :platforms => :mri_18
-  gem "ruby-debug19", :platforms => :mri_19 unless RUBY_VERSION == "1.9.3"
 end
