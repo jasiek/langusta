@@ -70,25 +70,6 @@ module Langusta
       end
     end
 
-    # TODO: this looks like it's not referenced anywhere.
-    def set_prior_map(prior_map)
-      @prior_map = Array.new[@lang_list.length]
-      sump = 0.0
-      @prior_map.length.times do |i|
-        lang = @lang_list[i]
-        if @prior_map.has_key?(lang)
-          p = @prior_map[lang]
-          raise "probability must be non-negative" if p < 0
-          @prior_map[i] = p
-          sump += p
-        end
-      end
-      raise "more one of prob must be non-zero" if sump <= 0
-      @prior_map.map! do |p|
-        p /= sump
-      end
-    end
-
     def self.normalize_prob(prob)
       maxp = 0.0; sump = 0.0
       prob.each do |p|
