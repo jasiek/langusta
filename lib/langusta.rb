@@ -1,15 +1,12 @@
 $: << File.expand_path(File.dirname(__FILE__))
 
 require 'rubygems'
-require 'bundler'
-Bundler.require
 
 require 'optparse'
 require 'iconv' if RUBY_VERSION < "1.9"
+require 'yajl'
 
 module Langusta
-  VERSION = '0.1.1'
-
   autoload :Guard, 'langusta/guard'
   autoload :Inspector, 'langusta/inspector'
   autoload :RegexHelper, 'langusta/regex_helper'
