@@ -8,9 +8,9 @@ module Langusta
       end
     end
 
-    def detect(ucs2_string)
+    def detect(utf8_string)
       detector = @factory.create()
-      detector.append(ucs2_string)
+      detector.append(Langusta.utf82cp(utf8_string))
       detector.detect()
     end
 

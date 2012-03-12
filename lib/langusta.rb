@@ -3,8 +3,12 @@ $: << File.expand_path(File.dirname(__FILE__))
 require 'rubygems'
 
 require 'optparse'
-require 'iconv' if RUBY_VERSION < "1.9"
 require 'yajl'
+
+if RUBY_VERSION < "1.9"
+  require 'iconv'
+  require 'oniguruma'
+end
 
 module Langusta
   autoload :Guard, 'langusta/guard'
