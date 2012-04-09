@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Langusta by jasiek</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Langusta</h1>
+<p>Bayesian language detection library</p>
+        <p class="view"><a href="https://github.com/jasiek/langusta">View the Project on GitHub <small>jasiek/langusta</small></a></p>
+        <ul>
+          <li><a href="https://github.com/jasiek/langusta/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jasiek/langusta/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jasiek/langusta">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>langusta</h1>
+
+<p>Langusta is a language detection library based on a method designed and implemented by Nakatani Shuyo. This work is almost a direct 1-to-1 port of the original Java library which can be found at: <a href="http://code.google.com/p/language-detection">http://code.google.com/p/language-detection</a>.</p>
+
+<p>For more information about the method (naive bayesian classification), have a look at this presentation: <a href="http://www.slideshare.net/shuyo/language-detection-library-for-java">http://www.slideshare.net/shuyo/language-detection-library-for-java</a>. This implementation uses some resources from the original library, specifically the language profiles.</p>
+
+<h2>Build status</h2>
+
+<p><a href="http://travis-ci.org/jasiek/langusta"><img src="https://secure.travis-ci.org/jasiek/langusta.png?branch=master" alt="Build Status"></a></p>
+
+<h2>Runtime dependencies</h2>
+
+<ul>
+<li>oniguruma - regular expressions swiss army knife (only required for 1.8.7)</li>
+<li>yajl-ruby - a quick and elegant JSON parser</li>
+</ul><h2>Usage</h2>
+
+<p>The simplest way to use this library is to use the facade provided with this package.</p>
+
+<div class="highlight">
+<pre><span class="nb">require</span> <span class="s1">'langusta'</span>
+<span class="n">facade</span> <span class="o">=</span> <span class="no">Langusta</span><span class="o">::</span><span class="no">LanguageDetectionFacade</span><span class="o">.</span><span class="n">new</span>
+<span class="n">facade</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="s1">'zażółć gęślą jaźń'</span><span class="p">)</span> <span class="c1">#=&gt; 'pl'</span>
+</pre>
+</div>
+
+
+<p>If you don't need all 49 profiles, you can boost your detection speed and reduce memory consumption by writing your own facade-like class.</p>
+
+<h2>Compatibility</h2>
+
+<ul>
+<li>Ruby 1.8.7</li>
+<li>Ruby 1.9.2</li>
+<li>Ruby 1.9.3</li>
+</ul><h2>Caveats</h2>
+
+<p>Langusta is a memory hog - 49 profiles will take up about 80MB of RAM.</p>
+
+<h2>Contributing to langusta</h2>
+
+<ul>
+<li>Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet</li>
+<li>Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it</li>
+<li>Fork the project</li>
+<li>Start a feature/bugfix branch</li>
+<li>Commit and push until you are happy with your contribution</li>
+<li>Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.</li>
+<li>Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.</li>
+</ul><h2>Copyright</h2>
+
+<p>Copyright (c) 2011, 2012 Jan Szumiec. See LICENSE.txt for further details.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/jasiek">jasiek</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-17961676-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
