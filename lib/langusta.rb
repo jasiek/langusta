@@ -10,6 +10,8 @@ if RUBY_VERSION < "1.9"
   require 'oniguruma'
 end
 
+require 'langusta/version'
+
 module Langusta
   autoload :Guard, 'langusta/guard'
   autoload :Inspector, 'langusta/inspector'
