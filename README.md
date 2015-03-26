@@ -31,6 +31,8 @@ If you don't need all 49 profiles, you can boost your detection speed and reduce
 * Ruby 1.9.2
 * Ruby 1.9.3
 * Ruby 2.0.0
+* Ruby 2.1
+* Ruby 2.2
 
 ## Caveats
 
@@ -48,5 +50,5 @@ Langusta is a memory hog - 49 profiles will take up about 80MB of RAM.
 
 ## Copyright
 
-Copyright (c) 2011-2013 Jan Szumiec. See LICENSE.txt for further details.
+Copyright (c) 2011-2015 Jan Szumiec. See LICENSE.txt for further details.
 

@@ -21,4 +21,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency("yajl-ruby", ["= 0.8.2"])
   gem.add_development_dependency("mocha")
   gem.add_development_dependency("rake")
+  gem.add_development_dependency("test-unit") if RUBY_VERSION >= "2.2"
 end
