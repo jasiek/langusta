@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_runtime_dependency("oniguruma", ["= 1.1.0"]) if RUBY_VERSION < "1.9"
-  gem.add_runtime_dependency("yajl-ruby", ["= 0.8.2"])
+  gem.add_runtime_dependency("yajl-ruby", ["= 1.3.1"])
   gem.add_development_dependency("mocha")
   gem.add_development_dependency("rake")
   gem.add_development_dependency("test-unit") if RUBY_VERSION >= "2.2"
